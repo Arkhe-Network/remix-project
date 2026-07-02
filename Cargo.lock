@@ -31,6 +31,14 @@ name = "arkhe-causal"
 version = "0.1.0"
 
 [[package]]
+name = "arkhe-core"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "arkhe-desci"
 version = "0.2.0"
 dependencies = [
@@ -52,6 +60,23 @@ dependencies = [
 [[package]]
 name = "arkhe-invariants"
 version = "0.1.0"
+
+[[package]]
+name = "arkhe-loop"
+version = "0.1.0"
+dependencies = [
+ "arkhe-core",
+ "serde",
+ "serde_json",
+ "tracing",
+]
+
+[[package]]
+name = "arkhe-ontology"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "arrayref"

@@ -1,6 +1,9 @@
 [workspace]
 resolver = "2"
 members = [
+    "crates/arkhe-core",
+    "crates/arkhe-loop",
+    "crates/arkhe-ontology",
     "crates/safe-core-core",
     "crates/safe-core-crypto",
     "crates/safe-core-policy",
@@ -39,6 +42,7 @@ uuid = { version = "1.12", features = ["v4", "serde"] }
 hex = "0.4"
 reqwest = { version = "0.12", features = ["json", "rustls-tls"] }
 rmcp = { version = "0.1.4", features = ["server", "transport-io"] }
+arkhe-core = { path = "crates/arkhe-core" }
 
 safe-core-core = { path = "crates/safe-core-core" }
 safe-core-crypto = { path = "crates/safe-core-crypto" }
