@@ -107,3 +107,4 @@ venv
 *.pt
 *.bin
 *.jsonl
+arkhe-tla-2.9.8/tla2tools.jar
