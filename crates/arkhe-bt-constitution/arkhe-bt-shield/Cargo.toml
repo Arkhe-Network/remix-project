@@ -1,0 +1,10 @@
+[package]
+name = "arkhe-bt-shield"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+arkhe-bt-core = { path = "../arkhe-bt-core" }
+
+[dev-dependencies]
+proptest = "1.4"

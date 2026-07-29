@@ -16,7 +16,10 @@ impl Default for MerkleTree {
 
 impl MerkleTree {
     pub fn new() -> Self {
-        Self { levels: Vec::new(), leaf_count: 0 }
+        Self {
+            levels: Vec::new(),
+            leaf_count: 0,
+        }
     }
 
     pub fn append_leaf(&mut self, leaf: MerkleHash) {

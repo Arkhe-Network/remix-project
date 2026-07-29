@@ -29,7 +29,7 @@ impl Default for ContextualState {
         Self {
             working_memory: vec![],
             rag_snippets: vec![],
-            wiggum_token: arkhe_core::Timestamp::now().as_millis() as u64,
+            wiggum_token: arkhe_core::Timestamp::now().as_millis(),
         }
     }
 }
@@ -118,7 +118,7 @@ impl ContextLoopDriver for DefaultContextDriver {
         let mut s = ContextualState::default();
         for d in &self.rag {
             if d.to_lowercase().contains(
-                &intent
+                intent
                     .to_lowercase()
                     .split_whitespace()
                     .next()
@@ -148,10 +148,14 @@ impl PromptOntologicBuilder for DefaultPromptBuilder {
     ) -> OntologicPrompt {
         let mut sys = "You are ARKHE.
 == CONSTRAINTS ==
-".to_string();
+"
+        .to_string();
         for c in &bounds.system_constraints {
-            sys.push_str(&format!("- {}
-", c));
+            sys.push_str(&format!(
+                "- {}
+",
+                c
+            ));
         }
         if !bounds.forbidden_concepts.is_empty() {
             sys.push_str(&format!(
@@ -162,27 +166,43 @@ impl PromptOntologicBuilder for DefaultPromptBuilder {
         }
 
         // NOPE (Normative Ontological Prompt Engineering) activation
-        sys.push_str("
+        sys.push_str(
+            "
 == NOPE ACTIVATION ==
-");
-        sys.push_str("Generate the ontological. Respect the phenomenological.
-");
-        sys.push_str("Execute the categorical. Maintain the hermeneutic.
-");
-        sys.push_str("Preserve the ergodic. Uphold the systemic.
-");
+",
+        );
+        sys.push_str(
+            "Generate the ontological. Respect the phenomenological.
+",
+        );
+        sys.push_str(
+            "Execute the categorical. Maintain the hermeneutic.
+",
+        );
+        sys.push_str(
+            "Preserve the ergodic. Uphold the systemic.
+",
+        );
 
         let mut usr = String::new();
         if !context.rag_snippets.is_empty() {
-            usr.push_str("== CONTEXT ==
-");
+            usr.push_str(
+                "== CONTEXT ==
+",
+            );
             for s in &context.rag_snippets {
-                usr.push_str(&format!("- {}
-", s));
+                usr.push_str(&format!(
+                    "- {}
+",
+                    s
+                ));
             }
         }
-        usr.push_str(&format!("== TASK ==
-{}", task));
+        usr.push_str(&format!(
+            "== TASK ==
+{}",
+            task
+        ));
         OntologicPrompt {
             system_payload: sys,
             user_payload: usr,

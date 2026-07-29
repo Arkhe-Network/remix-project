@@ -1,0 +1,15 @@
+[package]
+name = "arkhe-bt-pea"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+arkhe-bt-core = { path = "../arkhe-bt-core" }
+arkhe-bt-shield = { path = "../arkhe-bt-shield" }
+arkhe-bt-atomic = { path = "../arkhe-bt-atomic" }
+arkhe-bt-traversal = { path = "../arkhe-bt-traversal" }
+arkhe-bt-i7 = { path = "../arkhe-bt-i7" }
+serde = { version = "1.0", features = ["derive"] }
+
+[dev-dependencies]
+proptest = "1.4"

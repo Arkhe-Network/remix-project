@@ -61,21 +61,26 @@ impl IpfsClient {
     }
 
     pub async fn add_bytes(&self, data: &[u8], filename: &str) -> Result<IpfsPublishResult> {
-        let form = reqwest::multipart::Form::new()
-            .part("file", reqwest::multipart::Part::bytes(data.to_vec())
-                .file_name(filename.to_string()));
+        let form = reqwest::multipart::Form::new().part(
+            "file",
+            reqwest::multipart::Part::bytes(data.to_vec()).file_name(filename.to_string()),
+        );
 
-        let resp = self.http
+        let resp = self
+            .http
             .post(format!("{}/add", self.api_url))
             .multipart(form)
-            .send().await
+            .send()
+            .await
             .map_err(|e| DesciError::IpfsError(e.to_string()))?
             .error_for_status()
             .map_err(|e| DesciError::IpfsError(e.to_string()))?
-            .json::<serde_json::Value>().await
+            .json::<serde_json::Value>()
+            .await
             .map_err(|e| DesciError::IpfsError(e.to_string()))?;
 
-        let cid = resp["Hash"].as_str()
+        let cid = resp["Hash"]
+            .as_str()
             .ok_or_else(|| DesciError::IpfsError("No CID".into()))?
             .to_string();
         let size = resp["Size"].as_u64().unwrap_or(data.len() as u64);
@@ -87,8 +92,12 @@ impl IpfsClient {
         })
     }
 
-    pub fn api_url(&self) -> &str { &self.api_url }
-    pub fn gateway_url(&self) -> &str { &self.gateway_url }
+    pub fn api_url(&self) -> &str {
+        &self.api_url
+    }
+    pub fn gateway_url(&self) -> &str {
+        &self.gateway_url
+    }
 }
 
 /// Stub WormGraph (gRPC real requer proto compilado)
@@ -98,15 +107,26 @@ pub struct WormGraphNotifier {
 
 impl WormGraphNotifier {
     pub fn new(endpoint: &str) -> Self {
-        Self { _endpoint: endpoint.into() }
+        Self {
+            _endpoint: endpoint.into(),
+        }
     }
 
     pub async fn notify_publication(
-        &self, cid: &str, metadata: &DatasetMetadata,
+        &self,
+        cid: &str,
+        metadata: &DatasetMetadata,
     ) -> Result<String> {
         let notif_id = blake3::hash(
-            format!("{}:{}:{}", cid, metadata.name, chrono::Utc::now().timestamp_millis()).as_bytes()
-        ).to_string();
+            format!(
+                "{}:{}:{}",
+                cid,
+                metadata.name,
+                chrono::Utc::now().timestamp_millis()
+            )
+            .as_bytes(),
+        )
+        .to_string();
 
         info!(
             notif_id = %notif_id, cid = %cid, dataset = %metadata.name,
@@ -142,13 +162,21 @@ impl DeSciPublisher {
     }
 
     pub async fn publish_bytes(
-        &self, data: &[u8], filename: &str, metadata: DatasetMetadata,
+        &self,
+        data: &[u8],
+        filename: &str,
+        metadata: DatasetMetadata,
     ) -> Result<PublishResult> {
         let ipfs_r = self.ipfs.add_bytes(data, filename).await?;
-        let notif_id = self.wormgraph.notify_publication(&ipfs_r.cid, &metadata).await?;
+        let notif_id = self
+            .wormgraph
+            .notify_publication(&ipfs_r.cid, &metadata)
+            .await?;
         Ok(PublishResult {
-            cid: ipfs_r.cid, gateway_url: ipfs_r.gateway_url,
-            size_bytes: ipfs_r.size_bytes, notification_id: notif_id,
+            cid: ipfs_r.cid,
+            gateway_url: ipfs_r.gateway_url,
+            size_bytes: ipfs_r.size_bytes,
+            notification_id: notif_id,
             metadata,
         })
     }

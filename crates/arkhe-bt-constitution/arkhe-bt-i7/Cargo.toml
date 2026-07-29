@@ -1,0 +1,11 @@
+[package]
+name = "arkhe-bt-i7"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+arkhe-bt-core = { path = "../arkhe-bt-core" }
+arkhe-bt-traversal = { path = "../arkhe-bt-traversal" }
+
+[dev-dependencies]
+proptest = "1.4"

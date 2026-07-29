@@ -13,7 +13,9 @@ pub fn ic8_acyclic(s: &State) -> Result<(), InvariantViolation> {
                     cycle_hash: parent_hash.clone(),
                 });
             }
-            current = s.evidences.values()
+            current = s
+                .evidences
+                .values()
                 .find(|e| e.hash == *parent_hash)
                 .and_then(|e| e.parent_hash.as_ref());
         }
@@ -37,23 +39,53 @@ fn trace_set(s: &State, d: &Decision) -> Vec<EvidenceID> {
 
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum InvariantViolation {
-    Ic6MissingArtifact { evidence_id: EvidenceID, artifact_id: ArtifactID },
-    Ic8CycleDetected { evidence_id: EvidenceID, cycle_hash: Hash },
-    Ic10EmptyClaim { claim_id: ClaimID },
-    Ic16UntraceableDecision { decision_id: DecisionID, missing_evidence: EvidenceID },
+    Ic6MissingArtifact {
+        evidence_id: EvidenceID,
+        artifact_id: ArtifactID,
+    },
+    Ic8CycleDetected {
+        evidence_id: EvidenceID,
+        cycle_hash: Hash,
+    },
+    Ic10EmptyClaim {
+        claim_id: ClaimID,
+    },
+    Ic16UntraceableDecision {
+        decision_id: DecisionID,
+        missing_evidence: EvidenceID,
+    },
 }
 
 impl std::fmt::Display for InvariantViolation {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Ic6MissingArtifact { evidence_id, artifact_id } =>
-                write!(f, "IC6: Evidence {} references missing artifact {}", evidence_id, artifact_id),
-            Self::Ic8CycleDetected { evidence_id, cycle_hash } =>
-                write!(f, "IC8: Cycle detected at evidence {}, hash {}", evidence_id, cycle_hash),
-            Self::Ic10EmptyClaim { claim_id } =>
-                write!(f, "IC10: Claim {} has no evidences", claim_id),
-            Self::Ic16UntraceableDecision { decision_id, missing_evidence } =>
-                write!(f, "IC16: Decision {} references missing evidence {}", decision_id, missing_evidence),
+            Self::Ic6MissingArtifact {
+                evidence_id,
+                artifact_id,
+            } => write!(
+                f,
+                "IC6: Evidence {} references missing artifact {}",
+                evidence_id, artifact_id
+            ),
+            Self::Ic8CycleDetected {
+                evidence_id,
+                cycle_hash,
+            } => write!(
+                f,
+                "IC8: Cycle detected at evidence {}, hash {}",
+                evidence_id, cycle_hash
+            ),
+            Self::Ic10EmptyClaim { claim_id } => {
+                write!(f, "IC10: Claim {} has no evidences", claim_id)
+            }
+            Self::Ic16UntraceableDecision {
+                decision_id,
+                missing_evidence,
+            } => write!(
+                f,
+                "IC16: Decision {} references missing evidence {}",
+                decision_id, missing_evidence
+            ),
         }
     }
 }

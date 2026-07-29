@@ -9,7 +9,6 @@
 
 use serde::{Deserialize, Serialize};
 
-
 use crate::error::{DesciError, Result};
 
 /// Informação de um nó nodes.desci
@@ -91,13 +90,20 @@ impl NodesDesciClient {
     /// Healthcheck de um nó
     pub async fn healthcheck(&self) -> Result<NodeInfo> {
         let url = format!("{}/api/v1/health", self.base_url);
-        let resp = self.http.get(&url)
-            .send().await
-            .map_err(|_e| DesciError::NodeUnreachable { url: self.base_url.clone() })?
+        let resp = self
+            .http
+            .get(&url)
+            .send()
+            .await
+            .map_err(|_e| DesciError::NodeUnreachable {
+                url: self.base_url.clone(),
+            })?
             .error_for_status()
             .map_err(|e| DesciError::NodesDesciError(e.to_string()))?;
 
-        let mut info: NodeInfo = resp.json().await
+        let mut info: NodeInfo = resp
+            .json()
+            .await
             .map_err(|e| DesciError::NodesDesciError(e.to_string()))?;
         info.status = NodeStatus::Online;
         Ok(info)
@@ -106,14 +112,19 @@ impl NodesDesciClient {
     /// Busca datasets por query textual
     pub async fn search_datasets(&self, query: &str, limit: u32) -> Result<NodeSearchResult> {
         let url = format!("{}/api/v1/datasets/search", self.base_url);
-        let resp = self.http.get(&url)
+        let resp = self
+            .http
+            .get(&url)
             .query(&[("q", query), ("limit", &limit.to_string())])
-            .send().await
+            .send()
+            .await
             .map_err(|e| DesciError::NodesDesciError(e.to_string()))?
             .error_for_status()
             .map_err(|e| DesciError::NodesDesciError(e.to_string()))?;
 
-        let mut result: NodeSearchResult = resp.json().await
+        let mut result: NodeSearchResult = resp
+            .json()
+            .await
             .map_err(|e| DesciError::NodesDesciError(e.to_string()))?;
         result.node_url = self.base_url.clone();
         Ok(result)
@@ -124,7 +135,9 @@ impl NodesDesciClient {
         format!("{}/api/v1/datasets/{}/download", self.base_url, cid)
     }
 
-    pub fn base_url(&self) -> &str { &self.base_url }
+    pub fn base_url(&self) -> &str {
+        &self.base_url
+    }
 }
 
 /// Gerenciador de múltiplos nós
@@ -148,33 +161,48 @@ impl NodeRegistry {
 
     /// Retorna nós online
     pub fn online_nodes(&self) -> Vec<&NodeInfo> {
-        self.nodes.iter().filter(|n| n.status == NodeStatus::Online).collect()
+        self.nodes
+            .iter()
+            .filter(|n| n.status == NodeStatus::Online)
+            .collect()
     }
 
     /// Retorna nós com capability específica
     pub fn nodes_with_capability(&self, cap: &str) -> Vec<&NodeInfo> {
-        self.nodes.iter()
+        self.nodes
+            .iter()
             .filter(|n| n.capabilities.iter().any(|c| c == cap))
             .collect()
     }
 
     /// Busca em todos os nós online (stub — em produção, paralelo)
     pub fn search_all(&self, _query: &str) -> Vec<NodeSearchResult> {
-        self.online_nodes().iter().map(|node| NodeSearchResult {
-            node_id: node.node_id.clone(),
-            node_url: node.url.clone(),
-            datasets: Vec::new(), // Em produção: HTTP request
-            total_matching: 0,
-        }).collect()
+        self.online_nodes()
+            .iter()
+            .map(|node| NodeSearchResult {
+                node_id: node.node_id.clone(),
+                node_url: node.url.clone(),
+                datasets: Vec::new(), // Em produção: HTTP request
+                total_matching: 0,
+            })
+            .collect()
     }
 
-    pub fn all_nodes(&self) -> &[NodeInfo] { &self.nodes }
-    pub fn len(&self) -> usize { self.nodes.len() }
-    pub fn is_empty(&self) -> bool { self.nodes.is_empty() }
+    pub fn all_nodes(&self) -> &[NodeInfo] {
+        &self.nodes
+    }
+    pub fn len(&self) -> usize {
+        self.nodes.len()
+    }
+    pub fn is_empty(&self) -> bool {
+        self.nodes.is_empty()
+    }
 }
 
 impl Default for NodeRegistry {
-    fn default() -> Self { Self::new() }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 #[cfg(test)]

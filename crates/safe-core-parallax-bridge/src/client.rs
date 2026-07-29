@@ -1,4 +1,3 @@
-
 use crate::error::ParallaxError;
 use crate::types::*;
 
@@ -34,10 +33,7 @@ impl ParallaxClient {
 
     pub async fn health(&self) -> Result<HealthResponse, ParallaxError> {
         let mut client = self.inner.lock().await;
-        let resp = client
-            .health(HealthRequest {})
-            .await?
-            .into_inner();
+        let resp = client.health(HealthRequest {}).await?.into_inner();
 
         Ok(HealthResponse {
             ready: resp.ready,
@@ -47,10 +43,7 @@ impl ParallaxClient {
 
     pub async fn list_models(&self) -> Result<Vec<String>, ParallaxError> {
         let mut client = self.inner.lock().await;
-        let resp = client
-            .list_models(ListModelsRequest {})
-            .await?
-            .into_inner();
+        let resp = client.list_models(ListModelsRequest {}).await?.into_inner();
 
         Ok(resp.models)
     }
@@ -138,7 +131,11 @@ impl ParallaxClient {
         })
     }
 
-    pub async fn embed(&self, model_name: &str, texts: Vec<String>) -> Result<Vec<Embedding>, ParallaxError> {
+    pub async fn embed(
+        &self,
+        model_name: &str,
+        texts: Vec<String>,
+    ) -> Result<Vec<Embedding>, ParallaxError> {
         let req = ProtoEmbedRequest {
             model_name: model_name.to_string(),
             texts,

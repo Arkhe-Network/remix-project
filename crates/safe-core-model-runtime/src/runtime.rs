@@ -1,4 +1,3 @@
-
 use crate::error::RuntimeError;
 use crate::types::*;
 use async_trait::async_trait;
@@ -9,7 +8,10 @@ use std::sync::Arc;
 pub trait ModelRuntime: Send + Sync {
     async fn x_infer(&self, request: InferenceRequest) -> Result<InferenceResponse, RuntimeError>;
 
-    async fn x_infer_chat(&self, messages: Vec<ChatMessage>) -> Result<InferenceResponse, RuntimeError> {
+    async fn x_infer_chat(
+        &self,
+        messages: Vec<ChatMessage>,
+    ) -> Result<InferenceResponse, RuntimeError> {
         let request = InferenceRequest::chat(messages);
         self.x_infer(request).await
     }
@@ -71,7 +73,8 @@ pub async fn register_parallax(
     config: ModelConfig,
     guard: safe_core_policy::ConsensusGuard,
 ) -> Result<(), RuntimeError> {
-    let backend = crate::backends::parallax::ParallaxBackend::new(addr, model, config, guard).await?;
+    let backend =
+        crate::backends::parallax::ParallaxBackend::new(addr, model, config, guard).await?;
     registry.register(std::sync::Arc::new(backend)).await?;
     Ok(())
 }
