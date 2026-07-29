@@ -1,0 +1,3 @@
+[submodule "external/buzz"]
+	path = external/buzz
+	url = https://github.com/block/buzz.git

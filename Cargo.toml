@@ -15,6 +15,7 @@ members = [
     "crates/asi-governance",
     "crates/arkhe-causal",
     "crates/arkhe-desci",
+    "crates/cathedral-buzz-bridge",
 ]
 
 [workspace.package]
@@ -23,6 +24,7 @@ edition = "2021"
 authors = ["Arkhe Research Group <research@arkhe-os.org>"]
 license = "MIT OR Apache-2.0"
 rust-version = "1.85.0"
+repository = "https://github.com/arkhe-genesis/remix-project"
 
 [workspace.dependencies]
 serde = { version = "1.0", features = ["derive"] }
