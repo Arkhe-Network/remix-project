@@ -1,6 +1,9 @@
 [workspace]
 resolver = "2"
 members = [
+    "crates/arkhe-core",
+    "crates/arkhe-loop",
+    "crates/arkhe-ontology",
     "crates/safe-core-core",
     "crates/safe-core-crypto",
     "crates/safe-core-policy",
@@ -12,6 +15,11 @@ members = [
     "crates/arkhe-oats",
     "crates/arkhe-merkle",
     "crates/arkhe-hash-blake3",
+    "crates/arkhe-invariants",
+    "crates/asi-governance",
+    "crates/arkhe-causal",
+    "crates/arkhe-desci",
+    "crates/cathedral-buzz-bridge",
 ]
 
 [workspace.package]
@@ -20,6 +28,7 @@ edition = "2021"
 authors = ["Arkhe Research Group <research@arkhe-os.org>"]
 license = "MIT OR Apache-2.0"
 rust-version = "1.85.0"
+repository = "https://github.com/arkhe-genesis/remix-project"
 
 [workspace.dependencies]
 serde = { version = "1.0", features = ["derive"] }
@@ -39,6 +48,7 @@ uuid = { version = "1.12", features = ["v4", "serde"] }
 hex = "0.4"
 reqwest = { version = "0.12", features = ["json", "rustls-tls"] }
 rmcp = { version = "0.1.4", features = ["server", "transport-io"] }
+arkhe-core = { path = "crates/arkhe-core" }
 
 safe-core-core = { path = "crates/safe-core-core" }
 safe-core-crypto = { path = "crates/safe-core-crypto" }
