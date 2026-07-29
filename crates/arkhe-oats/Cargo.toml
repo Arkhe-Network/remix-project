@@ -1,0 +1,8 @@
+[package]
+name = "arkhe-oats"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+arkhe-core = { version = "0.1.0", path = "../arkhe-core" }
+async-trait = "0.1"
