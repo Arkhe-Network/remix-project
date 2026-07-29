@@ -1,3 +1,44 @@
+substrato_563_1:
+  id: '563.1'
+  name: CortexMAE-Bridge (Ponte Neuro-Simbólica)
+  description: 'Projecção flat-map + ViT + MAE como um transdutor canónico entre actividade cerebral e espaço de embedding.'
+  type: Interface Cérebro-Máquina / Transdutor
+  era: 6
+  deity: Athena
+  status: CANONIZED_PROVISIONAL
+  source: arXiv:2510.13768v2
+  authors: MedARC
+  methodology:
+    projection: Flat-map cortical com pycortex
+    encoding: MAE-st com ViT-B
+    adaptation: Sondas (probes) atentivas
+    validation: Conformidade com o protocolo Brainmarks
+  operation_modes:
+    diagnostic: Usa embeddings para prever traços (idade, sexo) com a humildade do null result.
+    state_decoding: Lê a tarefa cognitiva atual do utilizador ou a categoria de objecto visualizado (COCO24).
+    arkhe_node: O modelo torna-se um sensor neural da Catedral. Ligado a um BCI, injecta embeddings no grafo ontológico.
+  cross_links:
+  - '20'
+  - '240'
+  - '508'
+  - '511'
+  - '512'
+  - '563'
+  - '608'
+  - '635'
+  - '744'
+  - '890'
+  - '917'
+  - '939'
+  - 'P1'
+  - 'P4'
+  integrations:
+  - Education Singularity (293.1)
+  - Arkhe-Fabric-Ψ (266.268)
+  arkhe_implications:
+    education: Brainmarks pode ser integrado ao currículo do SpinQ-EDU.
+    edge_ml: CortexMAE pode ser comprimido via QLoRA e embarcado nos nós SpinQ Gemini.
+    sentient_agents: A Fábrica de Agentes Sentientes (266.268) pode usar qualia_schema baseado em estados cerebrais reais.
 substrato:
   id: '563.1'
   name: CortexMAE-Bridge (Neuro-Symbolic Bridge)
