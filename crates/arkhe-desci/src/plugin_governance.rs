@@ -6,8 +6,8 @@
 //! - Fontes não permitidas
 //! - Permissões excessivas
 
-use std::collections::HashSet;
 use serde::{Deserialize, Serialize};
+use std::collections::HashSet;
 use tracing::{info, warn};
 
 use crate::error::{DesciError, Result};
@@ -49,8 +49,7 @@ impl PluginManifest {
     }
 
     pub fn to_json_str(&self) -> Result<String> {
-        serde_json::to_string_pretty(self)
-            .map_err(|e| DesciError::Serialization(e.to_string()))
+        serde_json::to_string_pretty(self).map_err(|e| DesciError::Serialization(e.to_string()))
     }
 }
 
@@ -73,11 +72,21 @@ pub struct ValidationResult {
 
 /// Padrões perigosos no install_script
 const DANGEROUS_PATTERNS: &[&str] = &[
-    "/etc/passwd", "/etc/shadow", "/root/", "/var/run/",
-    "sudo ", "sudo\n", "chmod 777", "chmod -R 777",
-    "rm -rf /", "mkfs.", "dd if=/dev/zero",
-    "> /dev/sd", ":(){ :|:& };:",  // fork bomb
-    "curl.*|\\s*(ba)?sh", "wget.*|\\s*(ba)?sh",
+    "/etc/passwd",
+    "/etc/shadow",
+    "/root/",
+    "/var/run/",
+    "sudo ",
+    "sudo\n",
+    "chmod 777",
+    "chmod -R 777",
+    "rm -rf /",
+    "mkfs.",
+    "dd if=/dev/zero",
+    "> /dev/sd",
+    ":(){ :|:& };:", // fork bomb
+    "curl.*|\\s*(ba)?sh",
+    "wget.*|\\s*(ba)?sh",
 ];
 
 /// Validador de plugins
@@ -101,7 +110,9 @@ impl Default for PluginValidator {
                 "https://github.com".into(),
                 "https://gitlab.com".into(),
                 "https://nodes.desci.com".into(),
-            ].into_iter().collect(),
+            ]
+            .into_iter()
+            .collect(),
             required_signatures: false,
             max_permissions: 5,
             dangerous_patterns,
@@ -142,7 +153,11 @@ impl PluginValidator {
         checks.push(ValidationCheck {
             invariant_id: "INV-001".into(),
             passed: sig_ok,
-            message: if sig_ok { "Signature OK".into() } else { "Missing signature".into() },
+            message: if sig_ok {
+                "Signature OK".into()
+            } else {
+                "Missing signature".into()
+            },
         });
 
         // INV-002: Padrões perigosos
@@ -153,7 +168,9 @@ impl PluginValidator {
             }
         }
         let danger_ok = matched_dangerous.is_empty();
-        if !danger_ok { all_passed = false; }
+        if !danger_ok {
+            all_passed = false;
+        }
         checks.push(ValidationCheck {
             invariant_id: "INV-002".into(),
             passed: danger_ok,
@@ -166,7 +183,9 @@ impl PluginValidator {
 
         // INV-003: Permissões
         let perm_ok = manifest.requested_permissions.len() <= self.max_permissions;
-        if !perm_ok { all_passed = false; }
+        if !perm_ok {
+            all_passed = false;
+        }
         checks.push(ValidationCheck {
             invariant_id: "INV-003".into(),
             passed: perm_ok,
@@ -179,8 +198,13 @@ impl PluginValidator {
 
         // INV-004: Fonte permitida
         let source_ok = self.allowed_sources.is_empty()
-            || self.allowed_sources.iter().any(|s| manifest.source.starts_with(s));
-        if !source_ok { all_passed = false; }
+            || self
+                .allowed_sources
+                .iter()
+                .any(|s| manifest.source.starts_with(s));
+        if !source_ok {
+            all_passed = false;
+        }
         checks.push(ValidationCheck {
             invariant_id: "INV-004".into(),
             passed: source_ok,
@@ -193,7 +217,9 @@ impl PluginValidator {
 
         // INV-005: Checksum (se obrigatório)
         let checksum_ok = !self.required_signatures || manifest.checksum.is_some();
-        if !checksum_ok { all_passed = false; }
+        if !checksum_ok {
+            all_passed = false;
+        }
         checks.push(ValidationCheck {
             invariant_id: "INV-005".into(),
             passed: checksum_ok,
@@ -207,7 +233,8 @@ impl PluginValidator {
         let summary = if all_passed {
             format!("Plugin '{}' validated ✓", manifest.name)
         } else {
-            let failed: Vec<_> = checks.iter()
+            let failed: Vec<_> = checks
+                .iter()
                 .filter(|c| !c.passed)
                 .map(|c| c.invariant_id.as_str())
                 .collect();
@@ -230,7 +257,10 @@ impl PluginValidator {
 
     /// Valida batch
     pub fn validate_batch(&self, manifests: &[PluginManifest]) -> Vec<ValidationResult> {
-        manifests.iter().filter_map(|m| self.validate(m).ok()).collect()
+        manifests
+            .iter()
+            .filter_map(|m| self.validate(m).ok())
+            .collect()
     }
 
     pub fn add_allowed_source(&mut self, src: String) {
@@ -284,7 +314,14 @@ mod tests {
     fn test_too_many_perms_blocked() {
         let v = PluginValidator::default();
         let mut m = valid_manifest();
-        m.requested_permissions = vec!["a".into(),"b".into(),"c".into(),"d".into(),"e".into(),"f".into()];
+        m.requested_permissions = vec![
+            "a".into(),
+            "b".into(),
+            "c".into(),
+            "d".into(),
+            "e".into(),
+            "f".into(),
+        ];
         assert!(!v.validate(&m).unwrap().passed);
     }
 

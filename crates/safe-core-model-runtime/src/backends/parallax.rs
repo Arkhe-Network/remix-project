@@ -1,4 +1,3 @@
-
 use crate::error::RuntimeError;
 use crate::runtime::ModelRuntime;
 use crate::types::*;
@@ -178,8 +177,8 @@ impl ModelRuntime for ParallaxBackend {
 
 #[cfg(test)]
 mod tests {
-    use crate::RuntimeRegistry;
     use super::*;
+    use crate::RuntimeRegistry;
 
     fn make_guard() -> ConsensusGuard {
         ConsensusGuard::new()

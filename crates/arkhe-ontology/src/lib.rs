@@ -50,10 +50,7 @@ impl CognitiveOntology {
     pub fn query_relevant(&self, query: &str) -> Vec<OntologyNode> {
         self.nodes
             .iter()
-            .filter(|n| {
-                n.label.contains(query)
-                    || n.properties.values().any(|v| v.contains(query))
-            })
+            .filter(|n| n.label.contains(query) || n.properties.values().any(|v| v.contains(query)))
             .cloned()
             .collect()
     }

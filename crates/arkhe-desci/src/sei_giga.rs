@@ -10,9 +10,6 @@
 
 use serde::{Deserialize, Serialize};
 
-
-
-
 /// Mensagem para ancorar um dataset
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AnchorMsg {
@@ -42,7 +39,7 @@ pub struct AnchorInfo {
     pub orcid_id: Option<String>,
     pub trace_id: Option<String>,
     pub checksum_sha256: String,
-    pub anchored_at: u64,  // blockchain timestamp
+    pub anchored_at: u64, // blockchain timestamp
     pub block_height: u64,
     pub tx_hash: String,
 }
@@ -100,7 +97,10 @@ impl SeiGigaClient {
             cid: msg.cid.clone(),
             author_did: msg.author_did.clone(),
             block_height: 0,
-            tx_hash: format!("0x{}", blake3::hash(msg.cid.as_bytes()).to_string()[..16].to_string()),
+            tx_hash: format!(
+                "0x{}",
+                blake3::hash(msg.cid.as_bytes()).to_string()[..16].to_string()
+            ),
         })
     }
 
@@ -112,18 +112,27 @@ impl SeiGigaClient {
     /// Registra identidade (stub)
     pub async fn register_identity(&self, msg: &RegisterIdentityMsg) -> Result<String> {
         info!(did = %msg.did, "Registering identity on SEI (stub)");
-        Ok(format!("0x{}", blake3::hash(msg.did.as_bytes()).to_string()[..16].to_string()))
+        Ok(format!(
+            "0x{}",
+            blake3::hash(msg.did.as_bytes()).to_string()[..16].to_string()
+        ))
     }
 
-    pub fn chain_id(&self) -> &str { &self.chain_id }
-    pub fn contract_address(&self) -> &str { &self.contract_address }
+    pub fn chain_id(&self) -> &str {
+        &self.chain_id
+    }
+    pub fn contract_address(&self) -> &str {
+        &self.contract_address
+    }
 }
 
 /// Calcula hash do payload de ancoragem (para verificação off-chain)
 pub fn compute_anchor_hash(msg: &AnchorMsg) -> String {
     let payload = format!(
         "{}:{}:{}:{}:{}",
-        msg.cid, msg.checksum_sha256, msg.author_did,
+        msg.cid,
+        msg.checksum_sha256,
+        msg.author_did,
         msg.orcid_id.as_deref().unwrap_or(""),
         msg.license,
     );

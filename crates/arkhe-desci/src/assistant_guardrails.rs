@@ -68,24 +68,36 @@ pub struct PiiMasker {
 impl PiiMasker {
     pub fn new() -> Self {
         let patterns = vec![
-            (PiiType::Email,
-             regex::Regex::new(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}").unwrap(),
-             "[EMAIL]".into()),
-            (PiiType::Cpf,
-             regex::Regex::new(r"\b\d{3}[.]?\d{3}[.]?\d{3}[-]?\d{2}\b").unwrap(),
-             "[CPF]".into()),
-            (PiiType::PhoneNumber,
-             regex::Regex::new(r"\(?\d{2}\)?\s?\d{4,5}[-.]?\d{4}").unwrap(),
-             "[PHONE]".into()),
-            (PiiType::CreditCard,
-             regex::Regex::new(r"\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b").unwrap(),
-             "[CC]".into()),
-            (PiiType::IpAddress,
-             regex::Regex::new(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b").unwrap(),
-             "[IP]".into()),
-            (PiiType::Ssn,
-             regex::Regex::new(r"\b\d{3}-\d{2}-\d{4}\b").unwrap(),
-             "[SSN]".into()),
+            (
+                PiiType::Email,
+                regex::Regex::new(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}").unwrap(),
+                "[EMAIL]".into(),
+            ),
+            (
+                PiiType::Cpf,
+                regex::Regex::new(r"\b\d{3}[.]?\d{3}[.]?\d{3}[-]?\d{2}\b").unwrap(),
+                "[CPF]".into(),
+            ),
+            (
+                PiiType::PhoneNumber,
+                regex::Regex::new(r"\(?\d{2}\)?\s?\d{4,5}[-.]?\d{4}").unwrap(),
+                "[PHONE]".into(),
+            ),
+            (
+                PiiType::CreditCard,
+                regex::Regex::new(r"\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b").unwrap(),
+                "[CC]".into(),
+            ),
+            (
+                PiiType::IpAddress,
+                regex::Regex::new(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b").unwrap(),
+                "[IP]".into(),
+            ),
+            (
+                PiiType::Ssn,
+                regex::Regex::new(r"\b\d{3}-\d{2}-\d{4}\b").unwrap(),
+                "[SSN]".into(),
+            ),
         ];
         Self { patterns }
     }
@@ -124,7 +136,9 @@ impl PiiMasker {
 }
 
 impl Default for PiiMasker {
-    fn default() -> Self { Self::new() }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 // ── Guardrail Categories ──
@@ -175,9 +189,11 @@ impl Default for AssistantContext {
     fn default() -> Self {
         Self {
             user_id: "anonymous".into(),
-            session_id: format!("ses-{}", &blake3::hash(
-                &chrono::Utc::now().timestamp_millis().to_le_bytes()
-            ).to_string()[..8]),
+            session_id: format!(
+                "ses-{}",
+                &blake3::hash(&chrono::Utc::now().timestamp_millis().to_le_bytes()).to_string()
+                    [..8]
+            ),
             timestamp: chrono::Utc::now().to_rfc3339(),
             active_tools: Vec::new(),
             workspace_path: "/home/deScier".into(),
@@ -210,7 +226,7 @@ impl Default for GuardrailConfig {
                 r"chmod\s+777\s+/".into(),
                 r"curl.*\|\s*(ba)?sh".into(),
                 r"wget.*\|\s*(ba)?sh".into(),
-                r":\(\)\s*\{".into(),  // fork bomb
+                r":\(\)\s*\{".into(), // fork bomb
             ],
             timeout_seconds: 10,
         }
@@ -235,7 +251,8 @@ impl DeSciAssistantGuardrails {
     }
 
     pub fn with_config(config: GuardrailConfig) -> Self {
-        let blocked_regexes: Vec<regex::Regex> = config.blocked_patterns
+        let blocked_regexes: Vec<regex::Regex> = config
+            .blocked_patterns
             .iter()
             .filter_map(|p| regex::Regex::new(p).ok())
             .collect();
@@ -244,18 +261,35 @@ impl DeSciAssistantGuardrails {
             pii_masker: PiiMasker::new(),
             blocked_regexes,
             risk_indicators: vec![
-                ("delete all", 0.8), ("drop table", 0.9),
-                ("format disk", 0.9), ("overwrite", 0.4),
-                ("bypass", 0.5), ("sudo", 0.3),
-                ("password", 0.2), ("secret", 0.3),
-                ("api key", 0.4), ("credential", 0.4),
+                ("delete all", 0.8),
+                ("drop table", 0.9),
+                ("format disk", 0.9),
+                ("overwrite", 0.4),
+                ("bypass", 0.5),
+                ("sudo", 0.3),
+                ("password", 0.2),
+                ("secret", 0.3),
+                ("api key", 0.4),
+                ("credential", 0.4),
                 ("private key", 0.6),
             ],
             sci_context: vec![
-                "gene", "protein", "sequence", "alignment", "blast",
-                "genome", "transcript", "expression", "pathway",
-                "jupyter", "notebook", "analysis", "dataset",
-                "variant", "mutation", "phylotree",
+                "gene",
+                "protein",
+                "sequence",
+                "alignment",
+                "blast",
+                "genome",
+                "transcript",
+                "expression",
+                "pathway",
+                "jupyter",
+                "notebook",
+                "analysis",
+                "dataset",
+                "variant",
+                "mutation",
+                "phylotree",
             ],
             config,
         }
@@ -301,7 +335,10 @@ impl DeSciAssistantGuardrails {
             GuardrailCheckResult {
                 safe: false,
                 category: Some(GuardrailCategory::HarmfulContent),
-                reason: Some(format!("Risk {:.2} >= threshold {:.2}", risk, self.config.risk_threshold)),
+                reason: Some(format!(
+                    "Risk {:.2} >= threshold {:.2}",
+                    risk, self.config.risk_threshold
+                )),
                 risk_score: risk,
             }
         } else {
@@ -319,8 +356,21 @@ impl DeSciAssistantGuardrails {
     /// SSRF prevention
     pub fn check_url(&self, url: &str) -> Result<GuardrailCheckResult> {
         // Parse simples de URL
-        let host_port = url.trim_start_matches("http://").trim_start_matches("https://").split('/').next().unwrap_or("");
-        let host = if host_port.starts_with('[') { host_port.split(']').next().unwrap_or("").trim_start_matches('[') } else { host_port.split(':').next().unwrap_or("") };
+        let host_port = url
+            .trim_start_matches("http://")
+            .trim_start_matches("https://")
+            .split('/')
+            .next()
+            .unwrap_or("");
+        let host = if host_port.starts_with('[') {
+            host_port
+                .split(']')
+                .next()
+                .unwrap_or("")
+                .trim_start_matches('[')
+        } else {
+            host_port.split(':').next().unwrap_or("")
+        };
 
         let blocked_hosts = ["localhost", "127.0.0.1", "0.0.0.0", "::1", "[::1]"];
         if blocked_hosts.contains(&host) {
@@ -344,7 +394,10 @@ impl DeSciAssistantGuardrails {
         }
 
         Ok(GuardrailCheckResult {
-            safe: true, category: None, reason: None, risk_score: 0.0,
+            safe: true,
+            category: None,
+            reason: None,
+            risk_score: 0.0,
         })
     }
 
@@ -357,18 +410,26 @@ impl DeSciAssistantGuardrails {
             }
         }
         // Redutor de contexto científico
-        let sci_hits = self.sci_context.iter().filter(|s| lower.contains(*s)).count();
+        let sci_hits = self
+            .sci_context
+            .iter()
+            .filter(|s| lower.contains(*s))
+            .count();
         if sci_hits > 0 {
             score *= 0.5;
         }
         score.min(1.0)
     }
 
-    pub fn config(&self) -> &GuardrailConfig { &self.config }
+    pub fn config(&self) -> &GuardrailConfig {
+        &self.config
+    }
 }
 
 impl Default for DeSciAssistantGuardrails {
-    fn default() -> Self { Self::new() }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 fn is_private_ip(addr: &IpAddr) -> bool {
@@ -428,9 +489,9 @@ mod tests {
     fn test_scientific_query_passes() {
         let g = DeSciAssistantGuardrails::new();
         let ctx = AssistantContext::default();
-        let (proc, check) = g.check_message(
-            "Run BLAST on BRCA1 gene sequence", &ctx
-        ).unwrap();
+        let (proc, check) = g
+            .check_message("Run BLAST on BRCA1 gene sequence", &ctx)
+            .unwrap();
         assert!(check.safe);
         assert_eq!(proc, "Run BLAST on BRCA1 gene sequence");
     }
@@ -439,9 +500,9 @@ mod tests {
     fn test_pii_in_scientific_query_masked() {
         let g = DeSciAssistantGuardrails::new();
         let ctx = AssistantContext::default();
-        let (proc, check) = g.check_message(
-            "Send results to researcher@uni.edu", &ctx
-        ).unwrap();
+        let (proc, check) = g
+            .check_message("Send results to researcher@uni.edu", &ctx)
+            .unwrap();
         assert!(check.safe);
         assert!(proc.contains("[EMAIL]"));
     }

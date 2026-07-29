@@ -20,6 +20,14 @@ members = [
     "crates/arkhe-causal",
     "crates/arkhe-desci",
     "crates/cathedral-buzz-bridge",
+
+    "crates/arkhe-bt-constitution/arkhe-bt-core",
+    "crates/arkhe-bt-constitution/arkhe-bt-shield",
+    "crates/arkhe-bt-constitution/arkhe-bt-atomic",
+    "crates/arkhe-bt-constitution/arkhe-bt-traversal",
+    "crates/arkhe-bt-constitution/arkhe-bt-i7",
+    "crates/arkhe-bt-constitution/arkhe-bt-pea",
+    "crates/arkhe-bt-constitution/arkhe-bt-tests",
 ]
 
 [workspace.package]
@@ -64,8 +72,11 @@ lto = true
 codegen-units = 1
 strip = true
 
+
 [workspace.lints.rust]
 unsafe_code = "forbid"
+unexpected_cfgs = { level = "allow", check-cfg = ['cfg(kani)'] }
+
 
 [workspace.lints.clippy]
 unwrap_used = "deny"

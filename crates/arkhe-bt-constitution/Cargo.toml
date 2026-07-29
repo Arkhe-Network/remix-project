@@ -1,0 +1,17 @@
+[workspace]
+members = [
+    "arkhe-bt-core",
+    "arkhe-bt-shield",
+    "arkhe-bt-atomic",
+    "arkhe-bt-traversal",
+    "arkhe-bt-i7",
+    "arkhe-bt-pea",
+    "arkhe-bt-tests",
+]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Arkhe Constitutional Architecture Team"]
+license = "MIT OR Apache-2.0"

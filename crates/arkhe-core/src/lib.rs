@@ -1,7 +1,7 @@
-pub mod hash;
-pub mod types;
 pub mod delta;
+pub mod hash;
 pub mod invariants;
+pub mod types;
 
 #[cfg(test)]
 pub mod tests;

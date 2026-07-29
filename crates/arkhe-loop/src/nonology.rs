@@ -51,11 +51,13 @@ impl fmt::Display for NonologyTerm {
         }
     }
 }
+#[allow(clippy::new_without_default)]
 pub struct Transcendental {
     pub ground: (),
     pub terms: [NonologyTerm; 11],
 }
 impl Transcendental {
+    #[allow(clippy::new_without_default)]
     pub fn new() -> Self {
         Self {
             ground: (),

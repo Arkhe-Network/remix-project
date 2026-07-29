@@ -1,0 +1,8 @@
+[package]
+name = "arkhe-bt-core"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+thiserror = "1.0"
+serde = { version = "1.0", features = ["derive"] }

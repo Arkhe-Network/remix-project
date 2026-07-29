@@ -8,7 +8,6 @@
 
 use serde::{Deserialize, Serialize};
 
-
 use crate::error::{DesciError, Result};
 
 /// Prefixo DID para ORCID no ARKHE
@@ -45,7 +44,8 @@ pub struct DidDocument {
     #[serde(rename = "verificationMethod")]
     pub verification_methods: Vec<VerificationMethod>,
     pub service: Vec<DidService>,
-    #[serde(rename = "alsoKnownAs")] pub also_known_as: Vec<String>,
+    #[serde(rename = "alsoKnownAs")]
+    pub also_known_as: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -107,17 +107,25 @@ impl OrcidClient {
         let clean_id = orcid_id.trim_start_matches("https://orcid.org/");
         let url = format!("{}/{}/record", self.base_url, clean_id);
 
-        let resp = self.http.get(&url)
-            .send().await
+        let resp = self
+            .http
+            .get(&url)
+            .send()
+            .await
             .map_err(|e| DesciError::OrcidError(e.to_string()))?;
 
         if resp.status() == reqwest::StatusCode::NOT_FOUND {
-            return Err(DesciError::OrcidNotFound { orcid_id: orcid_id.into() });
+            return Err(DesciError::OrcidNotFound {
+                orcid_id: orcid_id.into(),
+            });
         }
-        let resp = resp.error_for_status()
+        let resp = resp
+            .error_for_status()
             .map_err(|e| DesciError::OrcidError(e.to_string()))?;
 
-        let data: serde_json::Value = resp.json().await
+        let data: serde_json::Value = resp
+            .json()
+            .await
             .map_err(|e| DesciError::OrcidError(e.to_string()))?;
 
         let name = &data["person"]["name"];
@@ -127,17 +135,32 @@ impl OrcidClient {
             family_name: name["family-name"]["value"].as_str().unwrap_or("").into(),
             email: None, // Requer OAuth para acesso
             institution: data["employment-summary"]
-                .get(0).and_then(|v| v.get("organization")).and_then(|v| v.get("name")).and_then(|v| v.as_str()).map(String::from),
-            country: data["address"]["country"]["value"].as_str().map(String::from),
-            works_count: data["activities-summary"]["works"]["group"].as_array()
-                .map(|a| a.len() as u32).unwrap_or(0),
-            keywords: data["keywords"]["keyword"].as_array()
-                .map(|a| a.iter().filter_map(|k| k["content"].as_str().map(String::from)).collect())
+                .get(0)
+                .and_then(|v| v.get("organization"))
+                .and_then(|v| v.get("name"))
+                .and_then(|v| v.as_str())
+                .map(String::from),
+            country: data["address"]["country"]["value"]
+                .as_str()
+                .map(String::from),
+            works_count: data["activities-summary"]["works"]["group"]
+                .as_array()
+                .map(|a| a.len() as u32)
+                .unwrap_or(0),
+            keywords: data["keywords"]["keyword"]
+                .as_array()
+                .map(|a| {
+                    a.iter()
+                        .filter_map(|k| k["content"].as_str().map(String::from))
+                        .collect()
+                })
                 .unwrap_or_default(),
         })
     }
 
-    pub fn base_url(&self) -> &str { &self.base_url }
+    pub fn base_url(&self) -> &str {
+        &self.base_url
+    }
 }
 
 /// Deriva DID ARKHE a partir de ORCID iD
@@ -195,8 +218,12 @@ pub fn create_attestation(
     let now = chrono::Utc::now();
     let expires = now + chrono::Duration::hours(valid_hours as i64);
 
-    let claim = format!("{}:{}:{}:{}",
-        attester_did, subject_did, orcid_id, now.timestamp()
+    let claim = format!(
+        "{}:{}:{}:{}",
+        attester_did,
+        subject_did,
+        orcid_id,
+        now.timestamp()
     );
     let proof_hash = blake3::hash(claim.as_bytes()).to_string();
 
@@ -213,10 +240,14 @@ pub fn create_attestation(
 
 /// Verifica uma attestation
 pub fn verify_attestation(att: &OrcidAttestation) -> bool {
-    let claim = format!("{}:{}:{}:{}",
-        att.attester_did, att.subject_did, att.orcid_id,
+    let claim = format!(
+        "{}:{}:{}:{}",
+        att.attester_did,
+        att.subject_did,
+        att.orcid_id,
         chrono::DateTime::parse_from_rfc3339(&att.issued_at)
-            .map(|dt| dt.timestamp()).unwrap_or(0)
+            .map(|dt| dt.timestamp())
+            .unwrap_or(0)
     );
     let expected = blake3::hash(claim.as_bytes()).to_string();
     if att.proof_hash != expected {

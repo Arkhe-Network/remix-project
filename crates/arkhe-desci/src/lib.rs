@@ -15,42 +15,38 @@
 //! - `orcid` (default) — Habilita cliente ORCID
 //! - `sei-giga` — Habilita cliente SEI GigaChain
 
-pub mod error;
-pub mod plugin_governance;
 pub mod assistant_guardrails;
-pub mod workflow_traceability;
-pub mod publishing;
+pub mod error;
 pub mod nodes_desci;
 pub mod orcid;
+pub mod plugin_governance;
+pub mod publishing;
 pub mod sei_giga;
+pub mod workflow_traceability;
 
 // Re-exports principais
-pub use error::{DesciError, Result};
-pub use plugin_governance::{PluginValidator, PluginManifest, ValidationResult, ValidationCheck};
 pub use assistant_guardrails::{
-    DeSciAssistantGuardrails, AssistantContext, GuardrailConfig,
-    GuardrailCheckResult, GuardrailCategory, PiiMasker, PiiCheckResult,
-    Redaction, PiiType,
+    AssistantContext, DeSciAssistantGuardrails, GuardrailCategory, GuardrailCheckResult,
+    GuardrailConfig, PiiCheckResult, PiiMasker, PiiType, Redaction,
 };
-pub use workflow_traceability::{
-    ScientificWorkflowTrace, WorkflowStep, WorkflowType, StepId, StepStatus,
-};
-pub use publishing::{
-    DatasetMetadata, IpfsPublishResult, PublishResult,
-    IpfsClient, WormGraphNotifier, DeSciPublisher,
-};
+pub use error::{DesciError, Result};
 pub use nodes_desci::{
-    NodeInfo, NodeStatus, NodeDataset, NodeSearchResult,
-    NodesDesciClient, NodeRegistry,
+    NodeDataset, NodeInfo, NodeRegistry, NodeSearchResult, NodeStatus, NodesDesciClient,
 };
 pub use orcid::{
-    OrcidProfile, OrcidDID, DidDocument, OrcidAttestation,
-    OrcidClient, derive_did, build_did_document,
-    create_attestation, verify_attestation, DID_ORCID_PREFIX,
+    build_did_document, create_attestation, derive_did, verify_attestation, DidDocument,
+    OrcidAttestation, OrcidClient, OrcidDID, OrcidProfile, DID_ORCID_PREFIX,
+};
+pub use plugin_governance::{PluginManifest, PluginValidator, ValidationCheck, ValidationResult};
+pub use publishing::{
+    DatasetMetadata, DeSciPublisher, IpfsClient, IpfsPublishResult, PublishResult,
+    WormGraphNotifier,
 };
 pub use sei_giga::{
-    AnchorMsg, RegisterIdentityMsg, AnchorInfo, IdentityInfo,
-    AnchorEvent, compute_anchor_hash,
+    compute_anchor_hash, AnchorEvent, AnchorInfo, AnchorMsg, IdentityInfo, RegisterIdentityMsg,
+};
+pub use workflow_traceability::{
+    ScientificWorkflowTrace, StepId, StepStatus, WorkflowStep, WorkflowType,
 };
 
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");

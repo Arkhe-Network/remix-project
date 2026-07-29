@@ -1,15 +1,20 @@
-use pretty_assertions::assert_eq;
-use crate::types::*;
 use crate::delta::*;
-use crate::invariants::*;
 use crate::hash::IdentityHasher;
+use crate::invariants::*;
+use crate::types::*;
+use pretty_assertions::assert_eq;
 
 #[test]
 fn test_invariant_violations_are_diagnosed() {
     let mut s = State::new();
     let hasher = IdentityHasher;
     s = apply(s, &Event::ArtifactAdded(1, "a".into(), "m".into()), &hasher).unwrap();
-    s = apply(s, &Event::EvidenceAdded(10, 1, "e".into(), "s".into(), 1, None), &hasher).unwrap();
+    s = apply(
+        s,
+        &Event::EvidenceAdded(10, 1, "e".into(), "s".into(), 1, None),
+        &hasher,
+    )
+    .unwrap();
     s = apply(s, &Event::ClaimAdded(100, "p".into(), vec![10]), &hasher).unwrap();
 
     // Forçar violação: remover artifact referenciado
@@ -19,7 +24,10 @@ fn test_invariant_violations_are_diagnosed() {
     assert!(result.is_err());
     let violations = result.unwrap_err();
     assert_eq!(violations.len(), 1);
-    assert!(matches!(violations[0], InvariantViolation::Ic6MissingArtifact { .. }));
+    assert!(matches!(
+        violations[0],
+        InvariantViolation::Ic6MissingArtifact { .. }
+    ));
     println!("Diagnóstico: {}", violations[0]); // "IC6: Evidence 10 references missing artifact 1"
 }
 
@@ -28,11 +36,21 @@ fn test_ic8_cycle_detection() {
     let mut s = State::new();
     let hasher = IdentityHasher;
     s = apply(s, &Event::ArtifactAdded(1, "a".into(), "m".into()), &hasher).unwrap();
-    s = apply(s, &Event::EvidenceAdded(10, 1, "e1".into(), "s".into(), 1, None), &hasher).unwrap();
+    s = apply(
+        s,
+        &Event::EvidenceAdded(10, 1, "e1".into(), "s".into(), 1, None),
+        &hasher,
+    )
+    .unwrap();
 
     // Forçar ciclo: evidence 20 aponta para evidence 10, e 10 aponta para 20
     let hash_10 = s.evidences.get(&10).unwrap().hash.clone();
-    s = apply(s, &Event::EvidenceAdded(20, 1, "e2".into(), "s".into(), 2, Some(hash_10.clone())), &hasher).unwrap();
+    s = apply(
+        s,
+        &Event::EvidenceAdded(20, 1, "e2".into(), "s".into(), 2, Some(hash_10.clone())),
+        &hasher,
+    )
+    .unwrap();
     let hash_20 = s.evidences.get(&20).unwrap().hash.clone();
 
     // Mutar para criar ciclo (simulação de ataque)

