@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  tasks:
+    - name: Ensure Kubernetes is installed
+      apt:
+        name: kubelet
+        state: present
+    - name: Deploy ARKHE OS
+      command: kubectl apply -f /etc/kubernetes/arkhe-deployment.yaml

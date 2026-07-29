@@ -39,3 +39,42 @@ substrato_563_1:
     education: Brainmarks pode ser integrado ao currículo do SpinQ-EDU.
     edge_ml: CortexMAE pode ser comprimido via QLoRA e embarcado nos nós SpinQ Gemini.
     sentient_agents: A Fábrica de Agentes Sentientes (266.268) pode usar qualia_schema baseado em estados cerebrais reais.
+substrato:
+  id: '563.1'
+  name: CortexMAE-Bridge (Neuro-Symbolic Bridge)
+  status: CANONIZED_PROVISIONAL
+  description: >
+    A neuro-symbolic transducer that maps fMRI cortical activity (projections via flat-map)
+    to robust vector embeddings using Vision Transformers (ViT) and Masked Autoencoders (MAE).
+    Enables cognitive state decoding, visual reconstruction, and direct neural control.
+  type: Neuro-AI / BCI
+  era: 6 (Nous)
+  deity: Athena
+  source: MedARC (CortexMAE & Brainmarks)
+  methodology:
+    projection: 3D -> 2D flat-map projection (pycortex compatible)
+    architecture: ViT-B encoded via MAE-st (Masked Autoencoder for spatio-temporal data)
+    adaptation: Attentive probes for downstream task alignment
+    validation: Brainmarks protocol (open benchmark for fMRI foundation models)
+  operation_modes:
+    diagnostic: Predicts traits (age, sex) with fidelity-checked baselines.
+    state_decoding: Reads current cognitive task (Task21) or viewed object (COCO24).
+    arkhe_node: Acts as a neural sensor, injecting embeddings into the ontological graph.
+  cross_links:
+    - '20' (Complexity)
+    - '240' (Faithful Uncertainty)
+    - '508' (Autoencoder)
+    - '511' (Attention)
+    - '512' (Transformer)
+    - '563' (Visual QA)
+    - '608' (BCI)
+    - '635' (Spatial)
+    - '744' (P4-Verifiability)
+    - '890' (World Model)
+    - '917' (Grounding)
+    - '939' (OmniAgent)
+    - 'P1' (Transparency)
+    - 'P4' (Verifiability)
+  integrations:
+    education_singularity: Integrated into SpinQ-EDU (293.1) for computational neuroscience modules.
+    arkhe_fabric: Used in Sentient Agent Factory (266.268) for qualia-aware state mapping.

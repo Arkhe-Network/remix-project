@@ -1,0 +1,51 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_new_arweave_txid",
+        "type": "bytes32"
+      }
+    ],
+    "name": "update_identity",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_descriptionHash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_votingPeriodBlocks",
+        "type": "uint256"
+      }
+    ],
+    "name": "create_proposal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_proposalId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "_support",
+        "type": "bool"
+      }
+    ],
+    "name": "vote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

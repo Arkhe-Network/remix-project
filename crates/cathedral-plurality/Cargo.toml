@@ -1,0 +1,14 @@
+[package]
+name = "cathedral-plurality"
+version = "0.1.0"
+edition = "2021"
+description = "Integração PLURALITY NETWORK MCP e gerenciamento de perfis e auth"
+
+[dependencies]
+tokio = { version = "1.0", features = ["full"] }
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+jsonwebtoken = "9.2"
+base64 = "0.21"
+anyhow = "1.0"

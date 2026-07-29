@@ -1,0 +1,22 @@
+
+[package]
+name = "safe-core-model-runtime"
+version.workspace = true
+edition.workspace = true
+description = "Unified model runtime (Candle, Parallax) with Convenção X"
+
+[dependencies]
+safe-core-core = { workspace = true }
+safe-core-policy = { workspace = true }
+safe-core-parallax-bridge = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+async-trait = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tokio = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+
+[lints]
+workspace = true

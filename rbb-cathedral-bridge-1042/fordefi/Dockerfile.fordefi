@@ -1,0 +1,13 @@
+FROM python:3.11-slim
+
+LABEL maintainer="ORCID 0009-0005-2697-4668"
+LABEL substrate="1042"
+LABEL component="fordefi-orchestrator"
+
+WORKDIR /app
+
+COPY fordefi_orchestrator.py /app/
+
+ENV FORDEFI_API_URL=https://api.fordefi.com/api/v1
+ENV FORDEFI_API_TOKEN=mock_token
+ENV SUBSTRATE=1042

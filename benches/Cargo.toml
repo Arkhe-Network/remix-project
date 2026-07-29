@@ -1,0 +1,15 @@
+
+[package]
+name = "cathedral-benches"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+criterion = "0.5"
+common = { path = "../common" }
+cathedral-sdk-rs = { path = "../cathedral/sdk-rs" }
+pqcrypto-dilithium = "0.3.1"
+
+[[bench]]
+name = "pqc_benchmarks"
+harness = false

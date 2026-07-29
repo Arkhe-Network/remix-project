@@ -1,0 +1,25 @@
+
+[package]
+name = "cathedral-sdk-rs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tonic = "0.12"
+prost = "0.13"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+prost-types = "0.13"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0"
+chrono = "0.4.45"
+uuid = { version = "1.23.3", features = ["v4"] }
+ed25519-dalek = "2.1"
+pqcrypto-dilithium = "0.3.1"
+pqcrypto-traits = "0.3"
+rand = "0.8"
+common = { path = "../../common" }
+blake3 = "1.8.5"
+
+[build-dependencies]
+tonic-build = "0.12"

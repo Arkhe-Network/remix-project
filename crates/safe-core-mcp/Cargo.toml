@@ -1,0 +1,10 @@
+
+[package]
+name = "safe-core-mcp"
+version.workspace = true
+edition.workspace = true
+[dependencies]
+safe-core-core = { workspace = true }
+rmcp = { workspace = true }
+[lints]
+workspace = true

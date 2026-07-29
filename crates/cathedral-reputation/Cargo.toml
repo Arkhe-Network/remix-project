@@ -1,0 +1,14 @@
+[package]
+name = "cathedral-reputation"
+version = "0.1.0"
+edition = "2024"
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+chrono.workspace = true
+dashmap.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true

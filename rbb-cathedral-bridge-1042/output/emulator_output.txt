@@ -1,0 +1,17 @@
+============================================
+CATHEDRAL QUANTUM TIME CRYSTAL EMULATOR (C++)
+============================================
+[EMULADOR] Cristal de tempo iniciado
+
+[TESTE] Executando ataques...
+[ATAQUE] Avanço rápido: +1000 ticks
+[RESULTADO] Avanço rápido detectado: 0
+[ATAQUE] Atraso: 1s
+[ATAQUE] Replay: tick 1031
+[RESULTADO] Replay detectado: 1
+[ATAQUE] Deriva de frequência: 0.99
+[ESTATÍSTICAS]
+  ticks_generated: 41
+  attacks_detected: 0
+
+[OK] Emulador finalizado.

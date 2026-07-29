@@ -1,0 +1,9 @@
+[package]
+name = "safe-core-crypto"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+blake3 = { workspace = true }
+kyberlib = { workspace = true }
+# lattice-safe-threshold-ml-dsa = { workspace = true, optional = true } # Currently git mock in workspace

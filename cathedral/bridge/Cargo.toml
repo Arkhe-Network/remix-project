@@ -1,0 +1,23 @@
+
+[package]
+name = "cathedral-bridge"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tonic = "0.12"
+prost = "0.13"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+prost-types = "0.13"
+chrono = "0.4.45"
+anyhow = "1.0"
+tracing = "0.1"
+blake3 = "1.5"
+common = { path = "../../common" }
+cathedral-sdk-rs = { path = "../sdk-rs" }
+tracing-subscriber = "0.3.23"
+ed25519-dalek = "2.2.0"
+fips204 = { version = "0.4.6", features = ["ml-dsa-65"] }
+
+[build-dependencies]
+tonic-build = "0.12"

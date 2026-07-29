@@ -1,0 +1,8 @@
+[package]
+name = "aegis"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aegis-plausible-reasoner = { path = "../aegis-plausible-reasoner" }
+rand = "0.8"

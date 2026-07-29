@@ -1,0 +1,8 @@
+[package]
+name = "arkhe-llm"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+async-trait = "0.1.80"
+arkhe-core = { path = "../arkhe-core" }

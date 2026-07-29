@@ -1,0 +1,16 @@
+{
+  "tools": [
+    {
+      "id": "tool_web_search",
+      "name": "Web Search",
+      "description": "Search the web for information.",
+      "risk_level": "low"
+    },
+    {
+      "id": "tool_read_file",
+      "name": "Read File",
+      "description": "Read file from the local filesystem.",
+      "risk_level": "low"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+[package]
+name = "arkhe-hash-blake3"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+arkhe-core = { version = "0.1.0", path = "../arkhe-core" }
+blake3 = "1.5"

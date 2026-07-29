@@ -1,0 +1,29 @@
+[package]
+name = "cathedral-blockchain"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+socket2 = { version = "0.4", features = ["all"] }
+libc = "0.2"
+
+bitcoin = "0.30.0"
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+async-trait = "0.1"
+chrono = "0.4"
+hex = "0.4"
+sha2 = "0.10"
+rand = "0.8"
+
+[features]
+default = ["std"]
+std = []
+ffi = []
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[workspace]

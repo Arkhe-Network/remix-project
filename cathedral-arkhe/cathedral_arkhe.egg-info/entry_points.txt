@@ -1,0 +1,5 @@
+[console_scripts]
+cathedral = cathedral.cli.main:main
+cathedral-inspect = cathedral.cli.inspect:main
+cathedral-monitor = cathedral.cli.monitor:main
+cathedral-scan = cathedral.cli.scan:main

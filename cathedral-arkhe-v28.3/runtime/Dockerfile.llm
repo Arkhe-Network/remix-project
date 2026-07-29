@@ -1,0 +1,13 @@
+FROM ghcr.io/huggingface/text-generation-inference:latest
+
+# Define model path
+ENV MODEL_ID="cathedral-llm-v28.3"
+ENV CATHEDRAL_MODEL_PATH=/models
+
+# Volumes and ports are configured in docker-compose.yml
+# Expose default port
+EXPOSE 8000
+
+# Entrypoint is inherited from text-generation-inference
+# but can be customized here to load specific configs
+CMD ["--model-id", "/models", "--port", "8000"]

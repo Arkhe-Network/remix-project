@@ -1,0 +1,18 @@
+{{- bos_token }}
+{%- if messages[0]['role'] == 'system' -%}
+    {%- set system_message = messages[0]['content'] -%}
+    {%- set loop_messages = messages[1:] -%}
+{%- else -%}
+    {%- set system_message = '' -%}
+    {%- set loop_messages = messages -%}
+{%- endif -%}
+{%- if system_message != '' -%}
+    {{- '<<SYS>>\n' + system_message + '\n<</SYS>>\n\n' -}}
+{%- endif -%}
+{%- for message in loop_messages -%}
+    {%- if message['role'] == 'user' -%}
+        {{- '[INST] ' + message['content'] + ' [/INST]' -}}
+    {%- elif message['role'] == 'assistant' -%}
+        {{- message['content'] + eos_token -}}
+    {%- endif -%}
+{%- endfor -%}

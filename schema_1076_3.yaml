@@ -1,0 +1,54 @@
+# Schema de Validação para Substrato 1076.3: ORCHESTRATOR-RSI-LOOP
+# Arquiteto ORCID: 0009-0005-2697-4668
+
+$schema: "http://json-schema.org/draft-07/schema#"
+$id: "arkhe://ontology/schema_1076_3.yaml"
+title: "ORCHESTRATOR-RSI-LOOP-1076.3"
+description: "Valida métricas do loop RSI (SINDy -> Proof-Refactor -> CRISPR -> ClawProof -> Deploy -> S')"
+
+type: object
+required:
+  - substrate
+  - version
+  - total_cycles
+  - successful_deploys
+  - system_state
+  - theosis_evolution
+  - seal
+
+properties:
+  substrate:
+    type: string
+    const: "1076.3"
+  version:
+    type: string
+    pattern: "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+  total_cycles:
+    type: integer
+    minimum: 0
+  successful_deploys:
+    type: integer
+    minimum: 0
+  system_state:
+    type: object
+    required:
+      - substrates
+      - theosis_global
+    properties:
+      substrates:
+        type: array
+        items:
+          type: string
+      theosis_global:
+        type: number
+        minimum: 0.0
+        maximum: 1.0
+  theosis_evolution:
+    type: array
+    items:
+      type: number
+      minimum: 0.0
+      maximum: 1.0
+  seal:
+    type: string
+    pattern: "^ORCHESTRATOR-1076\\.3-[A-F0-9]{16}$"

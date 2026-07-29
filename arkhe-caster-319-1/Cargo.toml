@@ -1,0 +1,31 @@
+[package]
+name = "arkhe-caster-319-1"
+version = "1.0.0"
+edition = "2021"
+
+[lints.rust]
+unused = "allow"
+
+[features]
+default = ["std"]
+std = ["rtnetlink", "boringtun", "libc", "tokio"]
+
+[dependencies]
+heapless = "0.8"
+
+[dependencies.rtnetlink]
+version = "0.14"
+optional = true
+
+[dependencies.boringtun]
+version = "0.6"
+optional = true
+
+[dependencies.libc]
+version = "0.2"
+optional = true
+
+[dependencies.tokio]
+version = "1.0"
+features = ["rt"]
+optional = true

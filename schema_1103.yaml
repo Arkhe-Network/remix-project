@@ -1,0 +1,9 @@
+# CATHEDRAL ARKHE
+# Substrate 1103 - BTFS-DEPIN-STORAGE
+name: BTFS-DEPIN-STORAGE
+id: "1103"
+era: ESCHATOLOGY
+status: CANONIZED_PROVISIONAL
+architect: "ORCID 0009-0005-2697-4668"
+seal: "BTFS-CATHEDRAL-1103-v1.0.0-2026-06-12"
+description: "BitTorrent File System (BTFS) integration with Cathedral AGI over Qubes OS to provide a sovereign, economically-incentivized distributed storage backend."

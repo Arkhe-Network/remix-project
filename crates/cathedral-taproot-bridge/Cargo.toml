@@ -1,0 +1,42 @@
+[package]
+name = "cathedral-taproot-bridge"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# gRPC
+tonic = { workspace = true, features = ["tls-native-roots", "transport"] }
+prost = "0.13"
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "signal"] }
+
+# Serialização
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+
+# Utilidades
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+hex = { workspace = true }
+blake3 = { workspace = true }
+chrono = { workspace = true, features = ["serde"] }
+uuid = { workspace = true, features = ["v4"] }
+url = "2.5"
+
+# Criptografia
+sha2 = "0.10"
+# ml-dsa = "0.1.0"  # PQC - quando disponível
+
+# Cathedral workspace dependencies
+cathedral-identity = { path = "../cathedral-identity" }
+
+[build-dependencies]
+tonic-build = "0.13" # changed to match workspace if tonic is 0.13, else let's check tonic version
+
+[dev-dependencies]
+criterion = { workspace = true }
+rand = "0.8"
+
+[[bench]]
+name = "bridge_benchmarks"
+harness = false

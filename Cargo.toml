@@ -1,0 +1,73 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/arkhe-core",
+    "crates/arkhe-loop",
+    "crates/arkhe-ontology",
+    "crates/safe-core-core",
+    "crates/safe-core-crypto",
+    "crates/safe-core-policy",
+    "crates/safe-core-mcp",
+    "crates/safe-core-a2a",
+    "crates/safe-core-parallax-bridge",
+    "crates/safe-core-model-runtime",
+    "crates/arkhe-core",
+    "crates/arkhe-oats",
+    "crates/arkhe-merkle",
+    "crates/arkhe-hash-blake3",
+    "crates/arkhe-invariants",
+    "crates/asi-governance",
+    "crates/arkhe-causal",
+    "crates/arkhe-desci",
+    "crates/cathedral-buzz-bridge",
+]
+
+[workspace.package]
+version = "3.0.0"
+edition = "2021"
+authors = ["Arkhe Research Group <research@arkhe-os.org>"]
+license = "MIT OR Apache-2.0"
+rust-version = "1.85.0"
+repository = "https://github.com/arkhe-genesis/remix-project"
+
+[workspace.dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tokio = { version = "1.43", features = ["full"] }
+async-trait = "0.1"
+blake3 = "1.5"
+ed25519-dalek = { version = "2.1", features = ["rand_core", "zeroize"] }
+zeroize = { version = "1.8", features = ["derive"] }
+rand_core = { version = "0.6", features = ["getrandom"] }
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.12", features = ["v4", "serde"] }
+hex = "0.4"
+reqwest = { version = "0.12", features = ["json", "rustls-tls"] }
+rmcp = { version = "0.1.4", features = ["server", "transport-io"] }
+arkhe-core = { path = "crates/arkhe-core" }
+
+safe-core-core = { path = "crates/safe-core-core" }
+safe-core-crypto = { path = "crates/safe-core-crypto" }
+safe-core-policy = { path = "crates/safe-core-policy" }
+safe-core-mcp = { path = "crates/safe-core-mcp" }
+safe-core-a2a = { path = "crates/safe-core-a2a" }
+safe-core-parallax-bridge = { path = "crates/safe-core-parallax-bridge" }
+safe-core-model-runtime = { path = "crates/safe-core-model-runtime" }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"

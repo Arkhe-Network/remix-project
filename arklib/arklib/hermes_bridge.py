@@ -1,0 +1,1 @@
+from arkhe_sdk.substrates.hermes_bridge_1040 import *

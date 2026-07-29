@@ -1,0 +1,12 @@
+
+[package]
+name = "safe-core-policy"
+version.workspace = true
+edition.workspace = true
+[dependencies]
+safe-core-core = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+[lints]
+workspace = true

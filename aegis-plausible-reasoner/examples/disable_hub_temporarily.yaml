@@ -1,0 +1,18 @@
+# AEGIS Mutation: Temporarily disable a poorly performing PicoAds hub
+candidate_id: C-R17-PICO-DISABLE-01
+bucket: config
+component: zk_memory_proof_policy
+changes:
+  - path: config.zk_memory_proof_policy.allowed_recommendation_hubs
+    from: ["defi-yield", "agent-tools", "saas-deals", "crypto-tax-portfolio-tracking"]
+    to: ["agent-tools", "saas-deals", "crypto-tax-portfolio-tracking"]  # defi-yield removed
+  - path: config.zk_memory_proof_policy.min_recommendation_value_usd
+    from: 10.0
+    to: 15.0  # raise the bar while defi-yield is disabled
+predicted_impact:
+  - picoads/recommendation_quality: +25%
+  - picoads/conversion_rate: +12%
+attribution_signature: "defi_yield_acceptance_rate < 0.4 && defi_yield_roas < 0.08 && recent_audit_flags > 1"
+description: |
+  Temporarily removes 'defi-yield' hub from allowed list when its performance drops.
+  The hub can be re-added later by another mutation once performance recovers.

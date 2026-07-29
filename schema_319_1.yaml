@@ -1,0 +1,9 @@
+id: "319.1"
+name: "CASTER-SOFTWARE-1.0"
+era: "ESCHATOLOGY"
+status: "PRODUCTION_READY"
+seal: "CATHEDRAL-319.1-CASTER-SOFTWARE-v1.0.0-2026-06-13"
+description: "Unified Field SDR — Software-Defined Networking Layer"
+dependencies:
+  - "rtnetlink"
+  - "boringtun"

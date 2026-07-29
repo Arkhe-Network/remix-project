@@ -1,0 +1,18 @@
+[package]
+name = "arkhe-security-audit"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+arkhe-core = { path = "../arkhe-core" }
+arkhe-agents = { path = "../arkhe-agents" }
+arkhe-llm = { path = "../arkhe-llm" }
+arkhe-metacognition = { path = "../arkhe-metacognition" }
+arkhe-bridge = { path = "../arkhe-bridge" }
+
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+async-trait = "0.1.80"
+thiserror = { workspace = true }

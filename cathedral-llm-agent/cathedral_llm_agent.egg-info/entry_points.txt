@@ -1,0 +1,3 @@
+[console_scripts]
+cathedral-agent = agent.core.agent_loop:main_cli
+cathedral-llm-server = llm.server.main:run_server

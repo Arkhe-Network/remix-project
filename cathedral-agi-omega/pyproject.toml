@@ -1,0 +1,30 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "cathedral-agi-omega"
+version = "0.1.0"
+description = "Cathedral AGI Omega - The mathematically aligned AGI"
+authors = ["Cathedral Team <admin@cathedral.org>"]
+readme = "README.md"
+packages = [
+    { include = "MAIN_ENTRYPOINT.py" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+blst-py = "^0.4.0"
+substrate-interface = "^1.7.0"
+py_ecc = "^6.0.0"
+web3 = "^6.10.0"
+neo4j = "^5.10.0"
+torch = "^2.0.0"
+ezkl = "^0.2.0"
+langchain = "^0.0.300"
+openai = "^0.28.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+black = "^23.7.0"
+flake8 = "^6.1.0"

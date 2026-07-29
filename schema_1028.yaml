@@ -1,0 +1,14 @@
+# schema_1028.yaml
+# Substrato 1028: GRAM-ASSURANCE-BRIDGE
+
+id: "1028"
+name: "GRAM-ASSURANCE-BRIDGE"
+description: "LPRM como Value Head em Safety Case GSN-structured"
+era: "APEIRON"
+architect: "ORCID: 0009-0005-2697-4668"
+status: "CANONIZED_PROVISIONAL"
+components:
+  - name: "LPRMValueHead"
+    description: "Adaptation of LPRM as a value head for confidence scoring."
+  - name: "SafetyCaseGSN"
+    description: "Safety case in Goal Structuring Notation."

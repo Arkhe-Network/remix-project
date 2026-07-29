@@ -1,0 +1,8 @@
+substrate: 1080
+name: "FORK DISCOVERY PROTOCOL"
+era: ESCHATOLOGY
+status: CANONIZED_PROVISIONAL
+architect: "0009-0005-2697-4668"
+description: >
+  Protocolo de descoberta de forks de arkhe-os no ambiente de execução.
+  Detecta forks em diretórios locais, git remotes, pip packages, e variáveis de ambiente.

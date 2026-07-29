@@ -1,0 +1,28 @@
+[workspace]
+members = [
+    "kernel",
+    "servers/vfs",
+    "servers/net",
+    "servers/passport",
+    "servers/orchestrator",
+    "servers/bindu",
+    "servers/package",
+    "libs/arklib",
+    "libs/pqc",
+    "libs/nostr",
+    "libs/ipfs",
+    "libs/tor",
+    "tools/arkhe-sh",
+    "tools/pkg",
+    "tools/checkpoint",
+    "arkhe-octra-bridge"
+]
+resolver = "2"
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+opt-level = 3
+lto = true
+panic = "abort"

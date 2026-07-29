@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  title: ARKHE AgentField Integration Schema
+  description: |
+    Schema defining how an AgentField agent consumes the FULL-100T-ORCHESTRATOR
+    (Substrate 989.y.3) and other Cathedral substrates via gRPC/WebSocket.
+  version: "1.0.0"
+  contact:
+    name: ARKHE Arquiteto Ontológico
+    url: https://arkhe-cathedral.org
+servers:
+  - url: grpc://orchestrator.arkhe-cathedral.org:50051
+    description: FULL-100T-ORCHESTRATOR gRPC Endpoint (989.y.3)
+  - url: wss://bindu.arkhe-cathedral.org/v1
+    description: Bindu Shared Memory WebSocket Endpoint (952)
+  - url: wss://omni.arkhe-cathedral.org/v1
+    description: OmniAgent Perception WebSocket Endpoint (939)
+
+paths:
+  /v1/orchestrator/submit:
+    post:
+      summary: "Submit AI job to FULL-100T-ORCHESTRATOR (app.ai)"
+      operationId: submitOrchestratorJob
+      tags:
+        - Inference
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InferenceRequest'
+      responses:
+        '200':
+          description: "Job accepted and processed"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InferenceResponse'
+        '403':
+          description: "Axiarchy/Governance Rejected"
+
+  /v1/omni/perceive:
+    post:
+      summary: "Send perception data to OmniAgent (@app.reasoner wrapper)"
+      operationId: perceiveOmniAgent
+      tags:
+        - Perception
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                intent:
+                  type: string
+                tags:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: "Perception registered in World Model"
+
+components:
+  schemas:
+    InferenceRequest:
+      type: object
+      required:
+        - prompt
+      properties:
+        prompt:
+          type: string
+          description: "The task or prompt for the 100T models."
+        task_type:
+          type: string
+          default: "reasoning"
+          enum: [reasoning, coding, multimodal, long_context, research, agentic]
+        priority:
+          type: integer
+          default: 2
+          description: "0=CRITICAL, 1=HIGH, 2=MEDIUM, 3=LOW"
+        model_id:
+          type: string
+          description: "Specific model to use (e.g., deepseek_v4_pro). If null, Athena selects."
+
+    InferenceResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+        model_id:
+          type: string
+        status:
+          type: string
+        result:
+          type: string
+        seal:
+          type: string
+          description: "Cryptographic ecosystem seal for the transaction"
+        temporal_anchor:
+          type: string
+          description: "TemporalChain anchoring hash"

@@ -1,0 +1,30 @@
+[package]
+name = "cathedral-napi"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = [ "cdylib",]
+
+[dependencies]
+napi-derive = "2.12.2"
+blake3 = "1.5.0"
+hex = "0.4.3"
+serde_json = "1.0"
+cathedral-embodied-no_std = { path = "../cathedral-embodied-no_std" }
+
+[dependencies.napi]
+version = "2.12.2"
+default-features = false
+features = [ "napi4", "async", "tokio_rt",]
+
+[dependencies.serde]
+version = "1.0"
+features = [ "derive",]
+
+[dependencies.tokio]
+version = "1.37.0"
+features = [ "full",]
+
+[build-dependencies]
+napi-build = "2.0.1"

@@ -1,0 +1,11 @@
+[package]
+name = "cathedral-resilience"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+tokio = { workspace = true }
+async-trait = "0.1"
+reqwest = "0.12"
+thiserror = { workspace = true }
+tracing = { workspace = true }

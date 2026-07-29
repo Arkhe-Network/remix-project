@@ -278,3 +278,7 @@ parameters:
 - Linkedin: https://www.linkedin.com/company/ethereum-remix
 - X: https://x.com/ethereumremix
 - Join our Discord: https://discord.gg/MzhfCGstNA
+
+## Integrations
+
+- **Octra Blockchain Bridge:** We have a new integration running in `arkhe-os/arkhe-octra-bridge` to seamlessly interface the Cathedral onto the Octra L1 blockchain. Find smart contracts and FHE interfaces in `arkhe_sdk/substrates/octra_996_1`.

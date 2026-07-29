@@ -1,6 +1,7 @@
 # arkhe_sdk/__init__.py
 
 from .core import ArkheOntologySDK
+from .agentfield_bridge import AgentFieldBridge
 from .arkhe_os import (
     ArkheOmniAgent,
     ArkheConfig,
@@ -32,4 +33,5 @@ __all__ = [
     "EncryptedMemoryCommit",
     "EpistemicCommitProtocol",
     "QuantumProofOfWork",
+    "AgentFieldBridge",
 ]

@@ -1,0 +1,71 @@
+{
+  "name": "CrawlAttestationView",
+  "description": "Indexa atestados de crawling do Cathedral ARKHE",
+  "version": "1.0.0",
+  "networks": [
+    {
+      "name": "timechain_testnet",
+      "chainId": 12345
+    }
+  ],
+  "contracts": [
+    {
+      "name": "AttestationStore",
+      "events": [
+        {
+          "anonymous": false,
+          "inputs": [
+            { "indexed": true, "name": "agentId", "type": "bytes32" },
+            { "indexed": false, "name": "testType", "type": "string" },
+            { "indexed": false, "name": "commitment", "type": "bytes32" },
+            { "indexed": false, "name": "metadata", "type": "string" }
+          ],
+          "name": "AttestationStored",
+          "type": "event"
+        }
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "name": "CrawlAttestation",
+      "fields": [
+        { "name": "id", "type": "ID!" },
+        { "name": "attestationId", "type": "String!" },
+        { "name": "requestId", "type": "String!" },
+        { "name": "agentId", "type": "Bytes!" },
+        { "name": "resultHash", "type": "Bytes!" },
+        { "name": "contentCommitment", "type": "Bytes!" },
+        { "name": "qualityScore", "type": "BigDecimal!" },
+        { "name": "attestationType", "type": "String!" },
+        { "name": "pagesCrawled", "type": "BigInt" },
+        { "name": "verified", "type": "Boolean!" },
+        { "name": "timestamp", "type": "BigInt!" }
+      ]
+    },
+    {
+      "name": "ReputationSnapshot",
+      "fields": [
+        { "name": "id", "type": "ID!" },
+        { "name": "targetName", "type": "String!" },
+        { "name": "totalMentions", "type": "BigInt!" },
+        { "name": "sentimentScore", "type": "BigDecimal!" },
+        { "name": "positiveMentions", "type": "BigInt!" },
+        { "name": "negativeMentions", "type": "BigInt!" },
+        { "name": "alertTriggered", "type": "Boolean!" },
+        { "name": "timestamp", "type": "BigInt!" }
+      ]
+    }
+  ],
+  "queries": {
+    "getCrawlAttestationsByAgent": {
+      "query": "query GetCrawlAttestations($agentId: Bytes!) { crawlAttestations(where: { agentId: $agentId }, orderBy: timestamp, orderDirection: desc) { id attestationId requestId qualityScore attestationType pagesCrawled verified timestamp } }"
+    },
+    "getHighQualityCrawls": {
+      "query": "query GetHighQualityCrawls($minScore: BigDecimal!) { crawlAttestations(where: { qualityScore_gte: $minScore, verified: true }) { id attestationId agentId qualityScore pagesCrawled timestamp } }"
+    },
+    "getReputationHistory": {
+      "query": "query GetReputationHistory($targetName: String!) { reputationSnapshots(where: { targetName: $targetName }, orderBy: timestamp, orderDirection: desc) { id targetName totalMentions sentimentScore alertTriggered timestamp } }"
+    }
+  }
+}

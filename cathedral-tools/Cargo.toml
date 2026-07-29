@@ -1,0 +1,6 @@
+[package]
+name = "cathedral-tools"
+version = "13.1.0"
+edition = "2021"
+
+[workspace]

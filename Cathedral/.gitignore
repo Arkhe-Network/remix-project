@@ -1,0 +1,8 @@
+zvec_data/
+logs/
+venv/
+rust_data_plane/target/
+*.pt
+__pycache__/
+*.so
+*.dll

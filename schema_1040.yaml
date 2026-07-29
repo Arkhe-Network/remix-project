@@ -1,0 +1,106 @@
+# Substrato 1040 — HERMES-CATHEDRAL BRIDGE Schema
+$schema: "http://json-schema.org/draft-07/schema#"
+title: "HermesCathedralBridge"
+description: "Ponte ontológica entre Hermes Agent e ARKHE Cathedral."
+type: object
+properties:
+  substrate_id:
+    type: string
+    const: "1040"
+  timestamp:
+    type: number
+  wormgraph_nodes:
+    type: array
+    items:
+      type: object
+      properties:
+        id: { type: string }
+        type: { type: string }
+        content: { type: string }
+        metadata:
+          type: object
+          properties:
+            usage_count: { type: integer }
+            success_rate: { type: number }
+            theosis: { type: number }
+            substrate: { type: string }
+            hermes_version: { type: string }
+        seal: { type: string }
+      required: [id, type, content, metadata, seal]
+  cache_entries:
+    type: array
+    items:
+      type: object
+      properties:
+        id: { type: string }
+        content: { type: string }
+        timestamp: { type: number }
+        platform: { type: string }
+        theosis: { type: number }
+        cache_footprint: { type: integer }
+        layout: { type: string }
+        prefetch: { type: boolean }
+        seal: { type: string }
+      required: [id, content, timestamp, platform, theosis, cache_footprint, layout, prefetch, seal]
+  mesh_nodes:
+    type: array
+    items:
+      type: object
+      properties:
+        node_id: { type: string }
+        type: { type: string }
+        platform: { type: string }
+        users: { type: integer }
+        messages: { type: integer }
+        theosis: { type: number }
+        region: { type: string }
+        protocols:
+          type: array
+          items: { type: string }
+        seal: { type: string }
+      required: [node_id, type, platform, users, messages, theosis, region, protocols, seal]
+  temporal_anchors:
+    type: array
+    items:
+      type: object
+      properties:
+        anchor_id: { type: string }
+        type: { type: string }
+        schedule: { type: string }
+        command_hash: { type: string }
+        platform: { type: string }
+        theosis: { type: number }
+        last_run: { type: [number, "null"] }
+        seal: { type: string }
+      required: [anchor_id, type, schedule, command_hash, platform, theosis, last_run, seal]
+  enterprise_sensors:
+    type: array
+    items:
+      type: object
+      properties:
+        sensor_id: { type: string }
+        type: { type: string }
+        task_hash: { type: string }
+        status: { type: string }
+        theosis: { type: number }
+        tools:
+          type: array
+          items: { type: string }
+        parent: { type: string }
+        deity: { type: string }
+        seal: { type: string }
+      required: [sensor_id, type, task_hash, status, theosis, tools, parent, deity, seal]
+  theosis_summary:
+    type: object
+    properties:
+      skills: { type: number }
+      memories: { type: number }
+      gateways: { type: number }
+      crons: { type: number }
+      subagents: { type: number }
+    required: [skills, memories, gateways, crons, subagents]
+  theosis_global:
+    type: number
+  seal:
+    type: string
+required: [substrate_id, timestamp, wormgraph_nodes, cache_entries, mesh_nodes, temporal_anchors, enterprise_sensors, theosis_summary, theosis_global, seal]

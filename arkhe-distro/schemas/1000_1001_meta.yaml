@@ -1,0 +1,9 @@
+name: Era 10 Genesis
+substrates:
+  - id: 1000
+    name: ARKHE FULL STACK
+    status: CANONIZED
+  - id: 1001
+    name: ARKHE-AGENT-OS
+    status: CANONIZED_PROVISIONAL
+description: Full polyglot initialization for Era 10.

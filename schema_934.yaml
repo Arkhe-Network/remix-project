@@ -5,6 +5,14 @@ substrato_934:
     representações de LLMs. Codificação transitória: fraca nas camadas iniciais, organizada
     nas intermediárias, atenuada nas finais. Domínios: cor (manifold circular), pitch
     (arco contínuo), emoção (valence-arousal), taste (manifold organizado).'
+substrato:
+  id: '934'
+  name: PERCEPTUAL-GEOMETRY-EMERGENCE
+  description: >
+    Geometria de domínios perceptuais humanos emerge transientemente nas
+    representações de LLMs. Codificação transitória: fraca nas camadas iniciais, organizada
+    nas intermediárias, atenuada nas finais. Domínios: cor (manifold circular), pitch
+    (arco contínuo), emoção (valence-arousal), taste (manifold organizado).
   type: Cognição/Percepção
   era: 6
   deity: Athena
@@ -18,6 +26,8 @@ substrato_934:
     alignment_metrics:
     - RSA (Spearman rank correlation)
     - GPA (Generalized Procrustes Analysis)
+      - RSA (Spearman rank correlation)
+      - GPA (Generalized Procrustes Analysis)
     validation: Bootstrap confidence intervals (1000 iterations, 95% percentile)
   domains:
     color:
@@ -67,6 +77,20 @@ substrato_934:
   - '551'
   - '561'
   - '591'
+  key_findings:
+    - Perceptual geometry emerges without direct perceptual supervision
+    - Distinct emergence profiles per domain and model
+    - 'Consistent trajectory: weak → organized → attenuated across depth'
+    - Simpler structures (taste) peak earlier than complex ones (emotion)
+  cross_links:
+    - '890'
+    - '924'
+    - '933'
+    - '501'
+    - '511'
+    - '551'
+    - '561'
+    - '591'
   arkhe_implications:
     world_model_v3: Valida estrutura geométrica de modelos internos
     substrate_attention: Confirma atenção substrate-aware do Substrato 924

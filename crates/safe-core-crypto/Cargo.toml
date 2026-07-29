@@ -1,0 +1,9 @@
+
+[package]
+name = "safe-core-crypto"
+version.workspace = true
+edition.workspace = true
+[dependencies]
+safe-core-core = { workspace = true }
+[lints]
+workspace = true

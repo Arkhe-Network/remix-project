@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arkhe-core
+  labels:
+    app: arkhe
+spec:
+  replicas: 7
+  selector:
+    matchLabels:
+      app: arkhe
+  template:
+    metadata:
+      labels:
+        app: arkhe
+    spec:
+      containers:
+      - name: arkhe-agent-os
+        image: arkhe/agent-os:1001
+        ports:
+        - containerPort: 39420

@@ -1,0 +1,40 @@
+{
+  "dashboard": {
+    "title": "Cathedral ARKHE v28.3 — Emergence Dashboard",
+    "panels": [
+      {
+        "title": "Mean Compression Score",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "arkhe_avg_compression_ratio / 1000",
+            "legendFormat": "Average Compression Ratio"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+      },
+      {
+        "title": "Active Specialist Agents",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "arkhe_active_specialist_agents",
+            "legendFormat": "Active Agents"
+          }
+        ],
+        "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+      },
+      {
+        "title": "Improvement in compression over time",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "arkhe_compression_improvement",
+            "legendFormat": "Compression Improvement"
+          }
+        ],
+        "gridPos": { "x": 0, "y": 8, "w": 24, "h": 8 }
+      }
+    ]
+  }
+}

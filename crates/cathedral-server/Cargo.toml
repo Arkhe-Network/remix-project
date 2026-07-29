@@ -1,0 +1,25 @@
+[package]
+name = "cathedral-server"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cathedral-core = { path = "../cathedral-core" }
+cathedral-identity = { path = "../cathedral-identity" }
+cathedral-wormgraph = { path = "../cathedral-wormgraph" }
+cathedral-zk = { path = "../cathedral-zk" }
+cathedral-remix-bridge = { path = "../cathedral-remix-bridge" }
+
+axum = { version = "0.7", features = ["json", "ws"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace", "compression-br"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1.44", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+hex = "0.4"
+anyhow = "1.0"
+thiserror = "2.0"
+chrono = "0.4"
+uuid = { version = "1.16", features = ["v4"] }

@@ -1,0 +1,12 @@
+[package]
+name = "arkhe-core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+async-trait = "0.1"
+
+[dev-dependencies]
+pretty_assertions = "1.4"
+serde = { workspace = true }
+serde_json = { workspace = true }

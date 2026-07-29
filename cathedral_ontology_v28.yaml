@@ -1,0 +1,58 @@
+@base: "https://arkhe.cathedral.io/ontology#"
+@prefix : <https://arkhe.cathedral.io/ontology#>
+
+classes:
+  Agent:
+    description: "An active entity in the system."
+  Hub:
+    description: "A centralized node for operations."
+  Recommendation:
+    properties:
+      - hasProvenance: ProvenanceRecord
+
+  # === New Neuro‑Symbolic Components ===
+  LLMOrchestrator:
+    description: "Bridge between natural language and formal ontology."
+    properties:
+      - delegatesTo: LlmBackend
+      - hasCurrentTask: CognitiveTask
+  LlmBackend:
+    description: "Abstraction for different LLM providers."
+    subClassOf: [GeminiFlash, ClaudeOpus, GptInstant, Grok, DeepSeekV4]
+  CognitiveTask:
+    description: "Unit of work for the orchestrator (e.g., translate, reason, act)."
+
+  # === Provenance & Trust ===
+  ProvenanceRecord:
+    description: "Immutable log of a decision or mutation."
+    properties:
+      - hasTimestamp: datetime
+      - hasAgent: Agent
+      - hasRationale: string        # e.g., 'acceptanceRate < 0.4'
+      - hasMutation: PolicyMutation
+      - hasLlmJustification: string # optional NL explanation
+
+  # === Constraints (enforced by PlausibleReasoner) ===
+  ConstraintViolation:
+    description: "A violation of an ontological constraint."
+    subClassOf: [LowPerformanceHub, MissingMemoryProof]
+
+relations:
+  - subject: LLMOrchestrator
+    predicate: delegatesTo
+    object: LlmBackend
+  - subject: Agent
+    predicate: generatesProvenance
+    object: ProvenanceRecord
+  - subject: PolicyMutation
+    predicate: hasProvenance
+    object: ProvenanceRecord
+
+axioms:
+  # Every mutation must have a provenance record.
+  - forall: PolicyMutation
+    must_exist: hasProvenance.ProvenanceRecord
+  # A recommendation without memory proof when required is a violation.
+  - forall: Recommendation
+    if: requiresMemoryProof == true AND cardinality(hasMemoryProof) == 0
+    then: isA MissingMemoryProof
