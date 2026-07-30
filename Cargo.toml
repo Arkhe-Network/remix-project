@@ -10,6 +10,8 @@ members = [
     "crates/safe-core-mcp",
     "crates/safe-core-a2a",
     "crates/safe-core-parallax-bridge",
+    "safety-core",
+    "floquet_ptc",
     "crates/safe-core-model-runtime",
     "crates/arkhe-core",
     "crates/arkhe-oats",
@@ -27,7 +29,7 @@ members = [
     "crates/arkhe-bt-constitution/arkhe-bt-traversal",
     "crates/arkhe-bt-constitution/arkhe-bt-i7",
     "crates/arkhe-bt-constitution/arkhe-bt-pea",
-    "crates/arkhe-bt-constitution/arkhe-bt-tests",
+    "crates/arkhe-bt-constitution/arkhe-bt-tests", "safety-core", "floquet_ptc",
 ]
 
 [workspace.package]

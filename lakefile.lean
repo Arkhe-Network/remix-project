@@ -11,7 +11,9 @@ lean_lib «CathedralArkhe» where
     `CathedralArkhe.Abstract.AgentCore,
     `CathedralArkhe.Applications.MathInCSSJS,
     `CathedralArkhe.Applications.ResponsiveLayout,
-    `CathedralArkhe.Applications.Typography
+    `CathedralArkhe.Applications.Typography,
+    `CathedralArkhe.Safety.Contract,
+    `CathedralArkhe.Safety.FFI
   ]
 
 require mathlib from git
