@@ -16,3 +16,6 @@ async-trait = { workspace = true }
 url = "2.5"
 tokio-tungstenite = "0.26"
 nostr = { version = "0.44", features = ["nip44", "nip98"] }
+hex = "0.4"
+blake3 = "1.5"
+rand = "0.8"
