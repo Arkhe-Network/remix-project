@@ -450,7 +450,10 @@ version = "3.0.0"
 dependencies = [
  "anyhow",
  "async-trait",
+ "blake3",
+ "hex",
  "nostr",
+ "rand 0.8.7",
  "reqwest",
  "serde",
  "serde_json",
