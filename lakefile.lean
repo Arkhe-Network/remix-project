@@ -13,7 +13,10 @@ lean_lib «CathedralArkhe» where
     `CathedralArkhe.Applications.ResponsiveLayout,
     `CathedralArkhe.Applications.Typography,
     `CathedralArkhe.Safety.Contract,
-    `CathedralArkhe.Safety.FFI
+    `CathedralArkhe.Safety.FFI,
+    `ArkheCognitive,
+    `shader,
+    `band_iso
   ]
 
 require mathlib from git
