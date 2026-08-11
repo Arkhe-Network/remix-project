@@ -22,6 +22,7 @@ tower-http = { version = "0.5", features = ["cors"] }
 tower = { version = "0.4", features = ["util"] }
 rusqlite = { version = "0.32", features = ["bundled", "chrono"] }
 crc32fast = "1.4"
+nalgebra = "0.35.0"
 
 [dev-dependencies]
 tokio-test = "0.4"
