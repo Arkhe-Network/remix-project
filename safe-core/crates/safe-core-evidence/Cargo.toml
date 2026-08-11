@@ -1,0 +1,8 @@
+[package]
+name = "safe-core-evidence"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+nalgebra = "0.33"
+thiserror = "1.0"
