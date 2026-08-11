@@ -18,6 +18,8 @@ use sha3::{Keccak256, Digest};
 mod channel;
 mod modulation;
 mod coding;
+pub mod inertia_certifier;
+pub mod inertia_derivative;
 mod transmission_log;
 mod api;
 mod qkd;
