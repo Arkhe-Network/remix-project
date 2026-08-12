@@ -1,0 +1,32 @@
+name: Formal Verification
+
+on:
+  push:
+    paths:
+      - 'arkhe-safe-sail/**'
+  pull_request:
+    paths:
+      - 'arkhe-safe-sail/**'
+
+jobs:
+  kani:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+      - name: Install Kani
+        run: |
+          cargo install kani-verifier
+          kani setup
+      - name: Run Kani verification
+        run: |
+          cd arkhe-safe-sail
+          cargo kani -Z function-contracts
+      - name: Upload verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kani-report
+          path: arkhe-safe-sail/target/kani-reports/
