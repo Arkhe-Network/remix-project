@@ -1,0 +1,20 @@
+{
+  "name": "arkhe-bridge",
+  "version": "1.0.0",
+  "description": "Bridge for Arkhe",
+  "main": "main.js",
+  "scripts": {
+    "build": "node esbuild.config.mjs production",
+    "dev": "node esbuild.config.mjs"
+  },
+  "keywords": [],
+  "author": "Arkhe",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.16.1",
+    "builtin-modules": "^3.3.0",
+    "esbuild": "^0.25.0",
+    "obsidian": "^1.1.1",
+    "typescript": "^5.5.4"
+  }
+}
