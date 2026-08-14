@@ -1,5 +1,17 @@
 [package]
 name = "arkhe-haselgrove"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+
+[dependencies]
+num-complex = "0.4.6"
+
+[lints]
+workspace = true
 version = "0.1.0"
 edition = "2021"
 

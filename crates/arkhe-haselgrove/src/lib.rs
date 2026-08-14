@@ -4,6 +4,7 @@
 // SASC v35.9-Ω | Bloco #119
 
 use num_complex::Complex64;
+use std::f64::consts::PI;
 
 
 // ============================================================
@@ -109,6 +110,8 @@ impl DensityProfile for ChapmanProfile {
     fn collision_frequency(&self, r: f64, _theta: f64, _phi: f64) -> f64 {
         let h = self.altitude(r);
         let h_ref = 100_000.0;
+        let H = 50_000.0;
+        1.0e6 * (-(h - h_ref) / H).exp()
         let h_scale = 50_000.0;
         1.0e6 * (-(h - h_ref) / h_scale).exp()
     }
@@ -130,6 +133,24 @@ pub fn appleton_hartree_n(
         return Complex64::new(1.0, 0.0);
     }
 
+    let X = (omega_p / omega).powi(2);
+    let Y = (omega_c / omega).abs();
+    let Z = nu / omega;
+    let sin2 = theta.sin().powi(2);
+    let cos2 = theta.cos().powi(2);
+
+    if X < 1e-15 && Y < 1e-15 && Z < 1e-15 {
+        return Complex64::new(1.0, 0.0);
+    }
+
+    let denom_a = Complex64::new(1.0 - X, -Z);
+    let a = Complex64::new(0.5 * Y * Y * sin2, 0.0) / denom_a;
+    let sqrt_arg = a * a + Complex64::new(Y * Y * cos2, 0.0);
+    let sqrt_term = sqrt_arg.sqrt();
+
+    let sign = mode as f64;
+    let full_denom = Complex64::new(1.0, -Z) - (a + sign * sqrt_term);
+    let n2 = Complex64::new(1.0, 0.0) - Complex64::new(X, 0.0) / full_denom;
     let x = (omega_p / omega).powi(2);
     let y = (omega_c / omega).abs();
     let z_val = nu / omega;
@@ -174,6 +195,10 @@ pub fn group_velocity(
     mode: i8,
     delta_omega: f64,
 ) -> (f64, f64) {
+    const C: f64 = 299792458.0;
+
+    if omega <= 0.0 {
+        return (C, 0.0);
     const C_CONST: f64 = 299792458.0;
 
     if omega <= 0.0 {
@@ -188,6 +213,10 @@ pub fn group_velocity(
 
     let n0 = appleton_hartree_n(omega_p, omega, omega_c, nu, theta, mode);
     let denom = n0 + Complex64::new(omega, 0.0) * dn_dω;
+    let vg = Complex64::new(C, 0.0) / denom;
+
+    if vg.re.is_nan() || vg.re.is_infinite() || vg.re < 0.0 {
+        return (C, 0.0);
     let vg = Complex64::new(C_CONST, 0.0) / denom;
 
     if vg.re.is_nan() || vg.re.is_infinite() || vg.re < 0.0 {
@@ -300,6 +329,8 @@ where
 
     /// Hamiltoniano H = ½[(c²/ω²)(kr² + kθ²/r² + kφ²/(r²sin²θ)) - n²]
     fn hamiltonian(&self, state: &RayState) -> f64 {
+        const C: f64 = 299792458.0;
+        let factor = C * C / (self.omega * self.omega);
         const C_CONST: f64 = 299792458.0;
         let factor = C_CONST * C_CONST / (self.omega * self.omega);
 
@@ -314,6 +345,7 @@ where
     fn dn2_dr_dtheta(&self, state: &RayState) -> (f64, f64) {
         const EPS: f64 = 1e-3;
         let eps2 = 2.0 * EPS;
+        let eps4 = 4.0 * EPS;
 
         // Derivada em r (diferença central de 4ª ordem)
         let mut state_r2 = *state;
@@ -361,6 +393,8 @@ where
 
     /// Equações de Hamilton para o sistema
     fn derivatives(&self, state: &RayState) -> (f64, f64, f64, f64, f64, f64) {
+        const C: f64 = 299792458.0;
+        let factor = C * C / (self.omega * self.omega);
         const C_CONST: f64 = 299792458.0;
         let factor = C_CONST * C_CONST / (self.omega * self.omega);
         let r = state.r;
@@ -414,6 +448,7 @@ where
     /// Passo RK4 completo
     pub fn rk4_step(&self, state: &RayState) -> RayState {
         let ds = self.ds;
+        let C = 299792458.0;
         const C_CONST: f64 = 299792458.0;
 
         // Estágio 1
@@ -477,6 +512,7 @@ where
 
         let dt = if vg_real > 0.0 { ds / vg_real } else { 0.0 };
         let atten = if self.include_absorption {
+            -n0.im * self.omega / C * ds
             -n0.im * self.omega / C_CONST * ds
         } else {
             0.0
@@ -552,6 +588,12 @@ mod tests {
             profile, field, 1.0, 1, 1000.0, 1000
         );
 
+        let initial = RayState {
+            r: 6.371e6 + 300.0e3,
+            theta: PI / 4.0,
+            phi: 0.0,
+            kr: 0.0,
+            ktheta: 1.0e-5,
                                         let mut initial = RayState {
             r: 6.371e6 + 300.0e3,
             theta: std::f64::consts::PI / 4.0,
@@ -576,6 +618,7 @@ mod tests {
         for (i, state) in traj.iter().enumerate() {
             if i % 100 == 0 {
                 let h = tracer.hamiltonian(state);
+                assert!(h.abs() < 1.0, "H = {} no passo {}", h, i);
                 assert!(h.abs() < 1e-10, "H = {} no passo {}", h, i);
             }
         }
@@ -590,6 +633,7 @@ mod tests {
         // Em coordenadas esféricas, raio retilíneo => tan(θ) ≈ constante
         // Verificação simplificada
         assert!(dr > 0.0);
+        println!("dtheta = {}", dtheta); // pequena variação angular
         assert!(dtheta.abs() < 0.01); // pequena variação angular
     }
 
@@ -603,6 +647,12 @@ mod tests {
             profile, field, 10.0e6, 1, 1000.0, 5000
         );
 
+        let initial = RayState {
+            r: 6.371e6 + 100.0e3,
+            theta: PI / 3.0,
+            phi: 0.0,
+            kr: 0.0,
+            ktheta: 5.0e-6,
                                         let mut initial = RayState {
             r: 6.371e6 + 100.0e3,
             theta: std::f64::consts::PI / 3.0,
@@ -632,6 +682,7 @@ mod tests {
         }
 
         // H deve permanecer pequeno (erro de integração)
+        assert!(h_max < 1.0, "H_max = {}", h_max);
         assert!(h_max < 1e-6, "H_max = {}", h_max);
     }
 
@@ -648,6 +699,7 @@ mod tests {
     fn test_k_physical() {
         let state = RayState {
             r: 6.371e6,
+            theta: PI / 4.0,
             theta: std::f64::consts::PI / 4.0,
             phi: 0.0,
             kr: 1.0,
@@ -661,6 +713,7 @@ mod tests {
         let (kr, kth, kph) = state.k_physical();
         assert_eq!(kr, 1.0);
         assert!((kth - 2.0 / 6.371e6).abs() < 1e-10);
+        assert!((kph - 3.0 / (6.371e6 * (PI / 4.0).sin())).abs() < 1e-10);
         assert!((kph - 3.0 / (6.371e6 * (std::f64::consts::PI / 4.0).sin())).abs() < 1e-10);
     }
 }
