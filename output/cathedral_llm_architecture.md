@@ -1,4 +1,4 @@
-architecture_doc = r'''# 🏛️ Cathedral Engine ↔ LLM Integration Architecture v1.0
+# 🏛️ Cathedral Engine ↔ LLM Integration Architecture v1.0
 ## ARKHE-CATHEDRAL-LLM-ARCH-2026-08-06
 
 ---
@@ -651,12 +651,3 @@ Este `LLMMetadata` é incluído no `payload` do `Block`. O `BlockHeader` continu
 
 **ARKHE-CATHEDRAL-LLM-ARCH-v1.0-2026-08-06**
 *Status: ARQUITETURA COMPLETA — PRONTA PARA IMPLEMENTAÇÃO* ✅
-'''
-
-import os
-os.makedirs('/mnt/agents/output', exist_ok=True)
-
-with open('/mnt/agents/output/cathedral_llm_architecture.md', 'w') as f:
-    f.write(architecture_doc)
-
-print(f"Architecture document: {len(architecture_doc)} chars")
