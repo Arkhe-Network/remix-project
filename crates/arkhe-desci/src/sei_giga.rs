@@ -85,7 +85,7 @@ impl SeiGigaClient {
     }
 
     /// Ancora dataset (stub — em produção: cosmwasm execute)
-    pub async fn anchor_dataset(&self, msg: &AnchorMsg) -> Result<AnchorEvent> {
+    pub async fn anchor_dataset(&self, msg: &AnchorMsg) -> anyhow::anyhow::anyhow::Result<AnchorEvent> {
         info!(
             cid = %msg.cid, did = %msg.author_did,
             "Anchoring dataset on SEI (stub)"
@@ -105,12 +105,12 @@ impl SeiGigaClient {
     }
 
     /// Query anchor info (stub)
-    pub async fn query_anchor(&self, cid: &str) -> Result<AnchorInfo> {
+    pub async fn query_anchor(&self, cid: &str) -> anyhow::anyhow::anyhow::Result<AnchorInfo> {
         Err(DesciError::AnchorNotFound { cid: cid.into() })
     }
 
     /// Registra identidade (stub)
-    pub async fn register_identity(&self, msg: &RegisterIdentityMsg) -> Result<String> {
+    pub async fn register_identity(&self, msg: &RegisterIdentityMsg) -> anyhow::anyhow::anyhow::Result<String> {
         info!(did = %msg.did, "Registering identity on SEI (stub)");
         Ok(format!(
             "0x{}",

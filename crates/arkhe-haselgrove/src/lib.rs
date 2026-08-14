@@ -6,6 +6,7 @@
 use num_complex::Complex64;
 use std::f64::consts::PI;
 
+
 // ============================================================
 // 1. TRAIT MAGNETIC FIELD (corrigido)
 // ============================================================
@@ -111,6 +112,8 @@ impl DensityProfile for ChapmanProfile {
         let h_ref = 100_000.0;
         let H = 50_000.0;
         1.0e6 * (-(h - h_ref) / H).exp()
+        let h_scale = 50_000.0;
+        1.0e6 * (-(h - h_ref) / h_scale).exp()
     }
 }
 
@@ -148,6 +151,24 @@ pub fn appleton_hartree_n(
     let sign = mode as f64;
     let full_denom = Complex64::new(1.0, -Z) - (a + sign * sqrt_term);
     let n2 = Complex64::new(1.0, 0.0) - Complex64::new(X, 0.0) / full_denom;
+    let x = (omega_p / omega).powi(2);
+    let y = (omega_c / omega).abs();
+    let z_val = nu / omega;
+    let sin2 = theta.sin().powi(2);
+    let cos2 = theta.cos().powi(2);
+
+    if x < 1e-15 && y < 1e-15 && z_val < 1e-15 {
+        return Complex64::new(1.0, 0.0);
+    }
+
+    let denom_a = Complex64::new(1.0 - x, -z_val);
+    let a = Complex64::new(0.5 * y * y * sin2, 0.0) / denom_a;
+    let sqrt_arg = a * a + Complex64::new(y * y * cos2, 0.0);
+    let sqrt_term = sqrt_arg.sqrt();
+
+    let sign = mode as f64;
+    let full_denom = Complex64::new(1.0, -z_val) - (a + sign * sqrt_term);
+    let n2 = Complex64::new(1.0, 0.0) - Complex64::new(x, 0.0) / full_denom;
 
     let mut n = n2.sqrt();
     if n.im < 0.0 {
@@ -178,6 +199,10 @@ pub fn group_velocity(
 
     if omega <= 0.0 {
         return (C, 0.0);
+    const C_CONST: f64 = 299792458.0;
+
+    if omega <= 0.0 {
+        return (C_CONST, 0.0);
     }
 
     let dω = if delta_omega > 0.0 { delta_omega } else { 1e-6 * omega };
@@ -192,6 +217,10 @@ pub fn group_velocity(
 
     if vg.re.is_nan() || vg.re.is_infinite() || vg.re < 0.0 {
         return (C, 0.0);
+    let vg = Complex64::new(C_CONST, 0.0) / denom;
+
+    if vg.re.is_nan() || vg.re.is_infinite() || vg.re < 0.0 {
+        return (C_CONST, 0.0);
     }
 
     (vg.re, vg.im)
@@ -302,6 +331,8 @@ where
     fn hamiltonian(&self, state: &RayState) -> f64 {
         const C: f64 = 299792458.0;
         let factor = C * C / (self.omega * self.omega);
+        const C_CONST: f64 = 299792458.0;
+        let factor = C_CONST * C_CONST / (self.omega * self.omega);
 
         let k2_metric = state.kr * state.kr
             + state.ktheta * state.ktheta / (state.r * state.r)
@@ -364,6 +395,8 @@ where
     fn derivatives(&self, state: &RayState) -> (f64, f64, f64, f64, f64, f64) {
         const C: f64 = 299792458.0;
         let factor = C * C / (self.omega * self.omega);
+        const C_CONST: f64 = 299792458.0;
+        let factor = C_CONST * C_CONST / (self.omega * self.omega);
         let r = state.r;
         let sin_theta = state.theta.sin();
         let cos_theta = state.theta.cos();
@@ -416,6 +449,7 @@ where
     pub fn rk4_step(&self, state: &RayState) -> RayState {
         let ds = self.ds;
         let C = 299792458.0;
+        const C_CONST: f64 = 299792458.0;
 
         // Estágio 1
         let (dr1, dth1, dph1, dkr1, dkt1, dkp1) = self.derivatives(state);
@@ -479,6 +513,7 @@ where
         let dt = if vg_real > 0.0 { ds / vg_real } else { 0.0 };
         let atten = if self.include_absorption {
             -n0.im * self.omega / C * ds
+            -n0.im * self.omega / C_CONST * ds
         } else {
             0.0
         };
@@ -559,11 +594,23 @@ mod tests {
             phi: 0.0,
             kr: 0.0,
             ktheta: 1.0e-5,
+                                        let mut initial = RayState {
+            r: 6.371e6 + 300.0e3,
+            theta: std::f64::consts::PI / 4.0,
+            phi: 0.0,
+            kr: 0.0,
+            ktheta: 0.0,
             kphi: 0.0,
             time: 0.0,
             path: 0.0,
             attenuation: 0.0,
         };
+        let n2 = tracer.n2(&initial);
+        initial.kr = tracer.omega / 299792458.0 * n2.sqrt();
+
+
+
+
 
         let traj = tracer.trace(initial);
 
@@ -572,6 +619,7 @@ mod tests {
             if i % 100 == 0 {
                 let h = tracer.hamiltonian(state);
                 assert!(h.abs() < 1.0, "H = {} no passo {}", h, i);
+                assert!(h.abs() < 1e-10, "H = {} no passo {}", h, i);
             }
         }
 
@@ -586,6 +634,7 @@ mod tests {
         // Verificação simplificada
         assert!(dr > 0.0);
         println!("dtheta = {}", dtheta); // pequena variação angular
+        assert!(dtheta.abs() < 0.01); // pequena variação angular
     }
 
     /// Teste 2: Conservação de H em meio com gradiente suave
@@ -604,11 +653,23 @@ mod tests {
             phi: 0.0,
             kr: 0.0,
             ktheta: 5.0e-6,
+                                        let mut initial = RayState {
+            r: 6.371e6 + 100.0e3,
+            theta: std::f64::consts::PI / 3.0,
+            phi: 0.0,
+            kr: 0.0,
+            ktheta: 0.0,
             kphi: 0.0,
             time: 0.0,
             path: 0.0,
             attenuation: 0.0,
         };
+        let n2 = tracer.n2(&initial);
+        initial.kr = tracer.omega / 299792458.0 * n2.sqrt();
+
+
+
+
 
         let traj = tracer.trace(initial);
         let mut h_max: f64 = 0.0;
@@ -622,6 +683,7 @@ mod tests {
 
         // H deve permanecer pequeno (erro de integração)
         assert!(h_max < 1.0, "H_max = {}", h_max);
+        assert!(h_max < 1e-6, "H_max = {}", h_max);
     }
 
     /// Teste 3: Appleton-Hartree em vácuo
@@ -638,6 +700,7 @@ mod tests {
         let state = RayState {
             r: 6.371e6,
             theta: PI / 4.0,
+            theta: std::f64::consts::PI / 4.0,
             phi: 0.0,
             kr: 1.0,
             ktheta: 2.0,
@@ -651,5 +714,6 @@ mod tests {
         assert_eq!(kr, 1.0);
         assert!((kth - 2.0 / 6.371e6).abs() < 1e-10);
         assert!((kph - 3.0 / (6.371e6 * (PI / 4.0).sin())).abs() < 1e-10);
+        assert!((kph - 3.0 / (6.371e6 * (std::f64::consts::PI / 4.0).sin())).abs() < 1e-10);
     }
 }

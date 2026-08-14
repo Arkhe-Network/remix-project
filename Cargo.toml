@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
+    "crates/arkhe-haselgrove",
     "crates/arkhe-core",
     "crates/arkhe-loop",
     "crates/arkhe-ontology",
