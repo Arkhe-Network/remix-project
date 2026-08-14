@@ -137,6 +137,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "arkhe-haselgrove"
+version = "0.1.0"
+dependencies = [
+ "num-complex",
+]
+
+[[package]]
 name = "arkhe-hash-blake3"
 version = "0.1.0"
 dependencies = [
@@ -1535,6 +1542,15 @@ dependencies = [
  "serde_json",
  "unicode-normalization",
  "url",
+]
+
+[[package]]
+name = "num-complex"
+version = "0.4.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "73f88a1307638156682bada9d7604135552957b7818057dcef22705b4d509495"
+dependencies = [
+ "num-traits",
 ]
 
 [[package]]
