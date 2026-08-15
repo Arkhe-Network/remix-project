@@ -1,0 +1,22 @@
+# safe-core/depgraph-rules.toml
+[rules]
+# Camada 0: Core não depende de ninguém
+safe-core-core = []
+
+# Camada 1: Identity depende apenas de Core
+safe-core-identity = ["safe-core-core"]
+
+# Camada 2: Governance depende de Core e Identity
+safe-core-governance = ["safe-core-core", "safe-core-identity"]
+
+# Camada 3: PEA depende de Core, Identity, Governance
+safe-core-pea = ["safe-core-core", "safe-core-identity", "safe-core-governance"]
+
+# Camada 4: Inference depende apenas de Core (isolado)
+safe-core-inference = ["safe-core-core"]
+
+# Camada 5: MCP depende de Core, Identity, PEA
+safe-core-mcp-adapter = ["safe-core-core", "safe-core-identity", "safe-core-pea"]
+
+# CLI (se existir) pode depender de tudo
+safe-core-cli = ["*"]  # Permite qualquer dependência interna

@@ -1,0 +1,16 @@
+[package]
+name = "safe-core-integration-tests"
+version.workspace = true
+edition.workspace = true
+publish = false
+
+[dependencies]
+safe-core-core = { path = "../../crates/safe-core-core" }
+safe-core-identity = { path = "../../crates/safe-core-identity" }
+safe-core-governance = { path = "../../crates/safe-core-governance" }
+safe-core-pea = { path = "../../crates/safe-core-pea" }
+tokio = { workspace = true }
+
+[lib]
+name = "safe_core_integration_tests"
+path = "lib.rs"

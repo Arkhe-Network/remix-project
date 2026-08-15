@@ -1,0 +1,32 @@
+[package]
+name = "safe-core-pea"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+description = "Descrição sucinta do crate safe-core-pea no SAFE-CORE OS"
+
+[dependencies]
+# Dependências internas (path-local)
+safe-core-core = { path = "../safe-core-core" }
+safe-core-identity = { path = "../safe-core-identity" }
+safe-core-governance = { path = "../safe-core-governance" }
+
+# Dependências externas (herdadas do workspace)
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+chrono = { workspace = true }
+blake3 = { workspace = true }
+
+[dev-dependencies]
+mockall = { workspace = true }
+tempfile = { workspace = true }
+criterion = { workspace = true }
+
+[[bench]]
+name = "benchmark"
+harness = false  # Usar critério
