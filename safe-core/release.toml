@@ -1,0 +1,7 @@
+# safe-core/release.toml
+sign-commit = false
+sign-tag = false
+push-remote = "origin"
+publish = false   # Publicar no crates.io desabilitado por enquanto
+workspace = true
+dependent-version = "fix"

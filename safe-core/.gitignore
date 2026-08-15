@@ -1,1 +1,30 @@
-target/
+# safe-core/.gitignore
+# Rust
+/target/
+**/*.rs.bk
+*.pdb
+*.dSYM
+
+# Cargo
+Cargo.lock  # Apenas se não for biblioteca. Como é workspace (bin + lib), recomendo sim!
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testes / Cobertura
+*.lcov
+*.profdata
+*.profraw
+
+# Documentação gerada
+/docs/book/
+/docs/api/
+
+# Dependências locais (se houver)
+/vendor/
