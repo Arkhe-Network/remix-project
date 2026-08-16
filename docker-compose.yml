@@ -1,112 +1,54 @@
-# docker-compose.yml
-version: '3.8'
+version: "3.9"
 
 services:
-  # Bitcoin Regtest Node
-  bitcoind:
-    image: lncm/bitcoind:latest
-    command:
-      - -regtest
-      - -rpcallowip=0.0.0.0
-      - -rpcbind=0.0.0.0
-      - -rpcuser=devuser
-      - -rpcpassword=devpass
-      - -server
-      - -txindex=1
-      - -deprecatedrpc=generate
+  litho-api:
+    build: .
     ports:
-      - "18443:18443"   # RPC
-      - "18444:18444"   # P2P
+      - "8000:8000"
     volumes:
-      - ./data/bitcoin:/data
+      - ./data/specs:/data/specs:ro
+      - ./data/reports:/data/reports
+      - ./equipment_db.json:/app/equipment_db.json:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-  # LND - Alice
-  lnd-alice:
-    image: lightninglabs/lnd:v0.17.0-beta
-    command:
-      - --bitcoin.regtest
-      - --bitcoin.active
-      - --bitcoin.node=bitcoind
-      - --bitcoind.rpcuser=devuser
-      - --bitcoind.rpcpass=devpass
-      - --bitcoind.zmqpubrawblock=tcp://bitcoind:28332
-      - --bitcoind.zmqpubrawtx=tcp://bitcoind:28333
-      - --accept-keysend
-      - --rpclisten=0.0.0.0:10009
-      - --restlisten=0.0.0.0:8080
-      - --tlsextradomain=alice
-      - --no-macaroons
+  litho-batch:
+    build: .
+    command: >
+      python litho_batch.py
+      --input-dir /data/specs
+      --output-dir /data/reports
+      --watch
+      --interval 60
+      --format json,markdown
+      --workers 2
+    volumes:
+      - ./data/specs:/data/specs:ro
+      - ./data/reports:/data/reports
+      - ./equipment_db.json:/app/equipment_db.json:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
     depends_on:
-      - bitcoind
-    ports:
-      - "10009:10009"   # gRPC
-      - "8080:8080"     # REST
-    volumes:
-      - ./data/lnd-alice:/root/.lnd
+      - litho-api
 
-  # LND - Bob
-  lnd-bob:
-    image: lightninglabs/lnd:v0.17.0-beta
-    command:
-      - --bitcoin.regtest
-      - --bitcoin.active
-      - --bitcoin.node=bitcoind
-      - --bitcoind.rpcuser=devuser
-      - --bitcoind.rpcpass=devpass
-      - --bitcoind.zmqpubrawblock=tcp://bitcoind:28332
-      - --bitcoind.zmqpubrawtx=tcp://bitcoind:28333
-      - --accept-keysend
-      - --rpclisten=0.0.0.0:10009
-      - --restlisten=0.0.0.0:8080
-      - --tlsextradomain=bob
-      - --no-macaroons
-    depends_on:
-      - bitcoind
-    ports:
-      - "10010:10009"   # gRPC
-      - "8081:8080"     # REST
-    volumes:
-      - ./data/lnd-bob:/root/.lnd
+  # Opcional: PostgreSQL para persistência de métricas
+  # db:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_USER: litho
+  #     POSTGRES_PASSWORD: litho
+  #     POSTGRES_DB: litho_metrics
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
 
-  # Taproot Assets Daemon - Alice
-  tapd-alice:
-    image: lightninglabs/taproot-assets:v0.3.0
-    command:
-      - --lnd-address=lnd-alice:10009
-      - --tapd-address=0.0.0.0:10029
-      - --network=regtest
-      - --debuglevel=debug
-      - --no-macaroons
-    depends_on:
-      - lnd-alice
-    ports:
-      - "10029:10029"   # gRPC
-      - "8089:8089"     # REST
-    volumes:
-      - ./data/tapd-alice:/root/.taproot-assets
-
-  # Taproot Assets Daemon - Bob
-  tapd-bob:
-    image: lightninglabs/taproot-assets:v0.3.0
-    command:
-      - --lnd-address=lnd-bob:10009
-      - --tapd-address=0.0.0.0:10029
-      - --network=regtest
-      - --debuglevel=debug
-      - --no-macaroons
-    depends_on:
-      - lnd-bob
-    ports:
-      - "10030:10029"   # gRPC
-      - "8090:8089"     # REST
-    volumes:
-      - ./data/tapd-bob:/root/.taproot-assets
-
-  # Price Oracle Mock (para RFQ)
-  oracle-mock:
-    image: lightninglabs/taproot-assets:v0.3.0
-    command:
-      - --mock-oracle
-      - --mock-oracle-rate=100000000  # 1 asset = 1 BTC
-    ports:
-      - "10031:10031"
+# volumes:
+#   pgdata:
