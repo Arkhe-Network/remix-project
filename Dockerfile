@@ -1,27 +1,23 @@
-FROM ubuntu:22.04
+FROM python:3.12-slim
 
-# Install necessary build tools and dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    git \
-    python3 \
-    python3-pip \
-    curl \
+WORKDIR /app
+
+# Instalar dependências do sistema (para WeasyPrint, se necessário)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Clone llama.cpp repository
-WORKDIR /app
-RUN git clone https://github.com/ggerganov/llama.cpp.git .
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Build llama-server
-RUN make server
+COPY litho_verifier_v310.py .
+COPY litho_api.py .
+COPY litho_batch.py .
+COPY litho_updater.py .
 
-# Copy the GGUF model into the container
-# This assumes arkhe-os.gguf is available in the build context
-COPY arkhe-os.gguf /app/models/arkhe-os.gguf
+# Criar diretórios para dados
+RUN mkdir -p /data/specs /data/reports
 
-# Expose port 8080 for the server
-EXPOSE 8080
+EXPOSE 8000
 
-# Run llama-server when the container launches
-ENTRYPOINT ["/app/llama-server", "-m", "/app/models/arkhe-os.gguf", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "litho_api:app", "--host", "0.0.0.0", "--port", "8000"]
