@@ -31,6 +31,7 @@ members = [
     "crates/arkhe-bt-constitution/arkhe-bt-i7",
     "crates/arkhe-bt-constitution/arkhe-bt-pea",
     "crates/arkhe-bt-constitution/arkhe-bt-tests", "safety-core", "floquet_ptc", "arkhe-soc-tlm", "arkhe-safe-sail", "crates/arkhe-haselgrove",
+    "crates/arkhe-vision",
 ]
 
 [workspace.package]
