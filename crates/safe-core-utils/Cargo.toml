@@ -1,0 +1,19 @@
+[package]
+name = "safe-core-utils"
+version = "0.1.0"
+edition = "2021"
+description = "Utilitarios do Safe-Core — Architectural Decision Log, Provenance, Helpers"
+
+[dependencies]
+postcard = { version = "1.0", features = ["alloc", "use-std"] }
+blake3 = "1.5"
+serde = { version = "1.0", features = ["derive"] }
+uuid = { version = "1.10", features = ["v4", "serde"] }
+thiserror = "1.0"
+base64 = "0.22"
+ed25519-dalek = { version = "2.1", optional = true }
+
+[features]
+ed25519 = ["dep:ed25519-dalek"]
+
+[workspace]
