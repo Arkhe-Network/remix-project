@@ -1,0 +1,10 @@
+--- crates/arkhe-haselgrove/src/lib.rs
++++ crates/arkhe-haselgrove/src/lib.rs
+@@ -112,8 +112,6 @@
+         let h_ref = 100_000.0;
+         let H = 50_000.0;
+         1.0e6 * (-(h - h_ref) / H).exp()
+-        let h_scale = 50_000.0;
+-        1.0e6 * (-(h - h_ref) / h_scale).exp()
+     }
+ }

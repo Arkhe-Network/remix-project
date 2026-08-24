@@ -1,0 +1,17 @@
+--- crates/arkhe-haselgrove/src/lib.rs
++++ crates/arkhe-haselgrove/src/lib.rs
+@@ -643,13 +643,7 @@
+         let mut tracer =
+             HaselgroveTracer::new(2.0 * PI * 10.0e6, bg.clone(), IntegratorOptions::default());
+
+-        let initial = RayState {
+-            r: 6.371e6 + 100.0e3,
+-            theta: PI / 3.0,
+-            phi: 0.0,
+-            kr: 0.0,
+-            ktheta: 5.0e-6,
+-                                        let mut initial = RayState {
++        let mut initial = RayState {
+             r: 6.371e6 + 100.0e3,
+             theta: std::f64::consts::PI / 3.0,
+             phi: 0.0,

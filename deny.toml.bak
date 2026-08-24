@@ -1,0 +1,49 @@
+[advisories]
+vulnerability = "deny"
+unmaintained = "warn"
+yanked = "warn"
+notice = "warn"
+ignore = []
+
+[licenses]
+unlicensed = "deny"
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Zlib",
+    "Unlicense",
+    "0BSD",
+    "BSL-1.0",
+    "CC0-1.0",
+    "GPL-1.0-or-later",
+    "GPL-2.0-or-later",
+    "GPL-3.0-or-later",
+    "AGPL-3.0-or-later",
+]
+deny = []
+copyleft = "warn"
+allow-osi-fsf-free = "neither"
+confidence-threshold = 0.8
+
+[bans]
+multiple-versions = "warn"
+wildcards = "allow"
+highlight = "all"
+workspace-default-features = "allow"
+external-default-features = "allow"
+
+[[bans.deny]]
+name = "openssl"
+[[bans.deny]]
+name = "failure"
+[[bans.deny]]
+name = "rustc-serialize"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

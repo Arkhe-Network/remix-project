@@ -1,0 +1,45 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.3",
+  "version": 1,
+  "serialNumber": "urn:uuid:8860f25d-62e7-4fd6-9b62-ad2567c8f34a",
+  "metadata": {
+    "timestamp": "2026-08-23T21:24:32.196881788Z",
+    "tools": [
+      {
+        "vendor": "CycloneDX",
+        "name": "cargo-cyclonedx",
+        "version": "0.5.9"
+      }
+    ],
+    "component": {
+      "type": "library",
+      "bom-ref": "path+file:///app/crates/arkhe-invariants#0.1.0",
+      "name": "arkhe-invariants",
+      "version": "0.1.0",
+      "scope": "required",
+      "purl": "pkg:cargo/arkhe-invariants@0.1.0?download_url=file://.",
+      "components": [
+        {
+          "type": "library",
+          "bom-ref": "path+file:///app/crates/arkhe-invariants#0.1.0 bin-target-0",
+          "name": "arkhe_invariants",
+          "version": "0.1.0",
+          "purl": "pkg:cargo/arkhe-invariants@0.1.0?download_url=file://.#src/lib.rs"
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "cdx:rustc:sbom:target:triple",
+        "value": "x86_64-unknown-linux-gnu"
+      }
+    ]
+  },
+  "components": [],
+  "dependencies": [
+    {
+      "ref": "path+file:///app/crates/arkhe-invariants#0.1.0"
+    }
+  ]
+}

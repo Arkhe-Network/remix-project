@@ -18,7 +18,7 @@ bytes = "1.5"
 image = "0.24"
 
 # ONNX Runtime (YOLO26)
-ort = { version = "2.0.0-rc.9", features = ["ndarray"] }
+ort = { version = "2.0.0-rc.9", default-features = false, features = ["ndarray", "fetch-models", "tls-rustls", "download-binaries"] }
 ndarray = "0.17"
 
 # PyTorch (SAM 3.1) - requires libtorch

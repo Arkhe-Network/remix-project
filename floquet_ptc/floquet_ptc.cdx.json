@@ -1,0 +1,63 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.3",
+  "version": 1,
+  "serialNumber": "urn:uuid:be534047-3058-49bc-a577-f7313c8ccb64",
+  "metadata": {
+    "timestamp": "2026-08-23T21:24:32.177925475Z",
+    "tools": [
+      {
+        "vendor": "CycloneDX",
+        "name": "cargo-cyclonedx",
+        "version": "0.5.9"
+      }
+    ],
+    "authors": [
+      {
+        "name": "Arkhe Research Group",
+        "email": "research@arkhe-os.org"
+      }
+    ],
+    "component": {
+      "type": "library",
+      "bom-ref": "path+file:///app/floquet_ptc#3.0.0",
+      "author": "Arkhe Research Group <research@arkhe-os.org>",
+      "name": "floquet_ptc",
+      "version": "3.0.0",
+      "scope": "required",
+      "licenses": [
+        {
+          "expression": "MIT OR Apache-2.0"
+        }
+      ],
+      "purl": "pkg:cargo/floquet_ptc@3.0.0?download_url=file://.",
+      "externalReferences": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/arkhe-genesis/remix-project"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "bom-ref": "path+file:///app/floquet_ptc#3.0.0 bin-target-0",
+          "name": "floquet_ptc",
+          "version": "3.0.0",
+          "purl": "pkg:cargo/floquet_ptc@3.0.0?download_url=file://.#src/lib.rs"
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "cdx:rustc:sbom:target:triple",
+        "value": "x86_64-unknown-linux-gnu"
+      }
+    ]
+  },
+  "components": [],
+  "dependencies": [
+    {
+      "ref": "path+file:///app/floquet_ptc#3.0.0"
+    }
+  ]
+}

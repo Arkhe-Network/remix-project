@@ -678,6 +678,7 @@ mod tests {
         let state = RayState {
             r: 6.371e6,
             theta: PI / 4.0,
+            theta: std::f64::consts::PI / 4.0,
             phi: 0.0,
             kr: 1.0,
             ktheta: 2.0,
@@ -691,5 +692,6 @@ mod tests {
         assert_eq!(kr, 1.0);
         assert!((kth - 2.0 / 6.371e6).abs() < 1e-10);
         assert!((kph - 3.0 / (6.371e6 * (PI / 4.0).sin())).abs() < 1e-10);
+        assert!((kph - 3.0 / (6.371e6 * (std::f64::consts::PI / 4.0).sin())).abs() < 1e-10);
     }
 }
