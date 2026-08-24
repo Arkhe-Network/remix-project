@@ -1,0 +1,17 @@
+--- crates/arkhe-haselgrove/src/lib.rs
++++ crates/arkhe-haselgrove/src/lib.rs
+@@ -585,13 +585,7 @@
+             profile, field, 1.0, 1, 1000.0, 1000
+         );
+
+-        let initial = RayState {
+-            r: 6.371e6 + 300.0e3,
+-            theta: PI / 4.0,
+-            phi: 0.0,
+-            kr: 0.0,
+-            ktheta: 1.0e-5,
+-                                        let mut initial = RayState {
++        let mut initial = RayState {
+             r: 6.371e6 + 300.0e3,
+             theta: std::f64::consts::PI / 4.0,
+             phi: 0.0,

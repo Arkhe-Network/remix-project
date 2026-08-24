@@ -1,0 +1,13 @@
+--- crates/arkhe-haselgrove/src/lib.rs
++++ crates/arkhe-haselgrove/src/lib.rs
+@@ -212,10 +212,6 @@
+
+     if vg.re.is_nan() || vg.re.is_infinite() || vg.re < 0.0 {
+         return (C, 0.0);
+-    let vg = Complex64::new(C_CONST, 0.0) / denom;
+-
+-    if vg.re.is_nan() || vg.re.is_infinite() || vg.re < 0.0 {
+-        return (C_CONST, 0.0);
+     }
+
+     (vg.re, vg.im)

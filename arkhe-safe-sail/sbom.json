@@ -1,0 +1,45 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.3",
+  "version": 1,
+  "serialNumber": "urn:uuid:3eb9c0ac-b13c-42f6-b958-434c581c2270",
+  "metadata": {
+    "timestamp": "2026-08-23T21:26:02.957198832Z",
+    "tools": [
+      {
+        "vendor": "CycloneDX",
+        "name": "cargo-cyclonedx",
+        "version": "0.5.9"
+      }
+    ],
+    "component": {
+      "type": "library",
+      "bom-ref": "path+file:///app/arkhe-safe-sail#0.1.0",
+      "name": "arkhe-safe-sail",
+      "version": "0.1.0",
+      "scope": "required",
+      "purl": "pkg:cargo/arkhe-safe-sail@0.1.0?download_url=file://.",
+      "components": [
+        {
+          "type": "library",
+          "bom-ref": "path+file:///app/arkhe-safe-sail#0.1.0 bin-target-0",
+          "name": "arkhe_safe_sail",
+          "version": "0.1.0",
+          "purl": "pkg:cargo/arkhe-safe-sail@0.1.0?download_url=file://.#src/lib.rs"
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "cdx:rustc:sbom:target:triple",
+        "value": "x86_64-unknown-linux-gnu"
+      }
+    ]
+  },
+  "components": [],
+  "dependencies": [
+    {
+      "ref": "path+file:///app/arkhe-safe-sail#0.1.0"
+    }
+  ]
+}

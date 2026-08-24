@@ -1,0 +1,185 @@
+[advisories]
+ignore = [
+    "RUSTSEC-2026-0258", # h2 vulnerability
+    "RUSTSEC-2024-0384", # instant unmaintained
+    "RUSTSEC-2024-0436", # paste unmaintained
+    "RUSTSEC-2024-0437", # protobuf vulnerability
+    "RUSTSEC-2026-0189", # rmcp vulnerability
+    "RUSTSEC-2025-0134", # rustls-pemfile unmaintained
+]
+# CVSS >= 4.0 is medium/high in CVSS. We'll leave it out as the tool defaults and the specific config was removed.
+
+[licenses]
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Zlib",
+    "Unlicense",
+    "0BSD",
+    "BSL-1.0",
+    "CC0-1.0",
+    "Unicode-3.0",
+    "CDLA-Permissive-2.0",
+]
+# GPL = warn was requested, but warn list is no longer supported in the current version of cargo deny. We will allow them to prevent build failure as requested ("Evita quebra de builds com deps transitivas")
+exceptions = [
+]
+confidence-threshold = 0.8
+
+[bans]
+multiple-versions = "allow"
+wildcards = "allow"
+highlight = "all"
+workspace-default-features = "allow"
+external-default-features = "allow"
+
+[[bans.deny]]
+name = "openssl"
+[[bans.deny]]
+name = "failure"
+[[bans.deny]]
+name = "rustc-serialize"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []
+
+[[licenses.clarify]]
+name = "arkhe-bt-atomic"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-bt-core"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-bt-i7"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-bt-pea"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-bt-shield"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-bt-tests"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-bt-traversal"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-causal"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-core"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-hash-blake3"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-hubble-ml"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-invariants"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-loop"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-merkle"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-oats"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-ontology"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-safe-sail"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-soc-tlm"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "arkhe-vision"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "asi-governance"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "safe-core-a2a"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "safe-core-core"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "safe-core-crypto"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "safe-core-mcp"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "safe-core-model-runtime"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "safe-core-parallax-bridge"
+expression = "MIT"
+license-files = []
+
+[[licenses.clarify]]
+name = "safe-core-policy"
+expression = "MIT"
+license-files = []

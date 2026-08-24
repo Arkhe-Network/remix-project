@@ -1,0 +1,13 @@
+--- crates/arkhe-haselgrove/src/lib.rs
++++ crates/arkhe-haselgrove/src/lib.rs
+@@ -198,10 +198,6 @@
+     const C: f64 = 299792458.0;
+
+     if omega <= 0.0 {
+-        return (C, 0.0);
+-    const C_CONST: f64 = 299792458.0;
+-
+-    if omega <= 0.0 {
+-        return (C_CONST, 0.0);
++        return (C, 0.0);
+     }

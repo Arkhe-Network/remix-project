@@ -1,0 +1,366 @@
+{
+  "global_score": 60.9,
+  "crates": {
+    "arkhe-bt-atomic": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 236 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 61.0
+    },
+    "arkhe-bt-core": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 368 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 61.0
+    },
+    "arkhe-bt-i7": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 364 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 61.0
+    },
+    "arkhe-bt-pea": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 315 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 61.0
+    },
+    "arkhe-bt-shield": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 178 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 61.0
+    },
+    "arkhe-bt-tests": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 100,
+      "testes_nota": "9/9 passaram",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 312 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 86.0
+    },
+    "arkhe-bt-traversal": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 217 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 61.0
+    },
+    "arkhe-causal": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 0,
+      "stubs_nota": "0 linhas",
+      "documentacao": 40,
+      "documentacao_nota": "README",
+      "composite": 38.0
+    },
+    "arkhe-core": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 100,
+      "testes_nota": "2/2 passaram",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 546 linhas",
+      "documentacao": 0,
+      "documentacao_nota": "sem docs",
+      "composite": 80.0
+    },
+    "arkhe-desci": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 100,
+      "testes_nota": "45/45 passaram",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 2854 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 86.0
+    },
+    "arkhe-haselgrove": {
+      "compilabilidade": 85,
+      "compilabilidade_nota": "3 erro(s)",
+      "testes": 0,
+      "testes_nota": "falha na execu\u00e7\u00e3o de testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 719 linhas",
+      "documentacao": 40,
+      "documentacao_nota": "README",
+      "composite": 58.5
+    },
+    "arkhe-hash-blake3": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 8 linhas",
+      "documentacao": 40,
+      "documentacao_nota": "README",
+      "composite": 63.0
+    },
+    "arkhe-hubble-ml": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 100,
+      "testes_nota": "8/8 passaram",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 1558 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 86.0
+    },
+    "arkhe-invariants": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 20 linhas",
+      "documentacao": 40,
+      "documentacao_nota": "README",
+      "composite": 63.0
+    },
+    "arkhe-loop": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 502 linhas",
+      "documentacao": 40,
+      "documentacao_nota": "README",
+      "composite": 63.0
+    },
+    "arkhe-merkle": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 81 linhas",
+      "documentacao": 40,
+      "documentacao_nota": "README",
+      "composite": 63.0
+    },
+    "arkhe-oats": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 70 linhas",
+      "documentacao": 40,
+      "documentacao_nota": "README",
+      "composite": 63.0
+    },
+    "arkhe-ontology": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 140 linhas",
+      "documentacao": 40,
+      "documentacao_nota": "README",
+      "composite": 63.0
+    },
+    "arkhe-safe-sail": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 255 linhas",
+      "documentacao": 0,
+      "documentacao_nota": "sem docs",
+      "composite": 55.0
+    },
+    "arkhe-soc-tlm": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 830 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 61.0
+    },
+    "arkhe-vision": {
+      "compilabilidade": 80,
+      "compilabilidade_nota": "4 erro(s)",
+      "testes": 0,
+      "testes_nota": "falha na execu\u00e7\u00e3o de testes",
+      "stubs": 98,
+      "stubs_nota": "1 stub(s) em 677 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 54.5
+    },
+    "asi-governance": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 0,
+      "stubs_nota": "0 linhas",
+      "documentacao": 40,
+      "documentacao_nota": "README",
+      "composite": 38.0
+    },
+    "cathedral-buzz-bridge": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 560 linhas",
+      "documentacao": 40,
+      "documentacao_nota": "README",
+      "composite": 63.0
+    },
+    "floquet_ptc": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 109 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 61.0
+    },
+    "safe-core-a2a": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 1 linhas",
+      "documentacao": 0,
+      "documentacao_nota": "sem docs",
+      "composite": 55.0
+    },
+    "safe-core-core": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 62 linhas",
+      "documentacao": 0,
+      "documentacao_nota": "sem docs",
+      "composite": 55.0
+    },
+    "safe-core-crypto": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 1 linhas",
+      "documentacao": 0,
+      "documentacao_nota": "sem docs",
+      "composite": 55.0
+    },
+    "safe-core-mcp": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 1 linhas",
+      "documentacao": 0,
+      "documentacao_nota": "sem docs",
+      "composite": 55.0
+    },
+    "safe-core-model-runtime": {
+      "compilabilidade": 85,
+      "compilabilidade_nota": "3 erro(s)",
+      "testes": 0,
+      "testes_nota": "falha na execu\u00e7\u00e3o de testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 619 linhas",
+      "documentacao": 0,
+      "documentacao_nota": "sem docs",
+      "composite": 50.5
+    },
+    "safe-core-parallax-bridge": {
+      "compilabilidade": 85,
+      "compilabilidade_nota": "3 erro(s)",
+      "testes": 0,
+      "testes_nota": "falha na execu\u00e7\u00e3o de testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 289 linhas",
+      "documentacao": 0,
+      "documentacao_nota": "sem docs",
+      "composite": 50.5
+    },
+    "safe-core-policy": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 39 linhas",
+      "documentacao": 0,
+      "documentacao_nota": "sem docs",
+      "composite": 55.0
+    },
+    "safety-core": {
+      "compilabilidade": 100,
+      "compilabilidade_nota": "compila",
+      "testes": 0,
+      "testes_nota": "0 testes",
+      "stubs": 100,
+      "stubs_nota": "0 stub(s) em 240 linhas",
+      "documentacao": 30,
+      "documentacao_nota": "crate-doc",
+      "composite": 61.0
+    }
+  },
+  "methodology": {
+    "weights": {
+      "compilabilidade": 0.3,
+      "testes": 0.25,
+      "stubs": 0.25,
+      "documentacao": 0.2
+    },
+    "timestamp": "2026-08-23T21:33:45+00:00"
+  }
+}
