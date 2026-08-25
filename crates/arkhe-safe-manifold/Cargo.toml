@@ -1,0 +1,21 @@
+[package]
+name = "arkhe-safe-manifold"
+version = "0.2.1"
+edition = "2021"
+description = "SafeManifold — Security state projection with constitutional invariants"
+authors = ["Arquiteto-Chefe"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/arkhe-org/arkhe-safe-manifold"
+keywords = ["security", "ai-safety", "invariants", "manifold", "arkhe"]
+categories = ["no-std", "cryptography", "development-tools"]
+rust-version = "1.70"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+
+[dev-dependencies]
+proptest = "1.4"
+
+[workspace]
