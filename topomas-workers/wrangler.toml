@@ -1,0 +1,46 @@
+name = "topomas-workers"
+main = "src/index.ts"
+compatibility_date = "2024-12-18"
+
+# Durable Objects
+[[durable_objects.bindings]]
+name = "PROJECT_DO"
+class_name = "ProjectDO"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["ProjectDO"]
+
+# Queues
+[[queues]]
+binding = "QUEUE"
+name = "topomas-tasks"
+
+# R2
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "topomas-artifacts"
+
+# Hyperdrive
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+name = "topomas-sql"
+database = "TopoMAS_DB"
+user = "topomas"
+password = "secret"
+host = "your-sql-server.database.windows.net"
+port = 1432
+
+# AI
+[ai]
+binding = "AI"
+
+# Variáveis de ambiente
+[vars]
+JWT_SECRET = "your-secret-key"
+TOPOMAS_API = "https://topomas-backend.example.com"
+
+# Roteamento
+[[routes]]
+pattern = "api.topomas.io/*"
+zone_id = "your-zone-id"
