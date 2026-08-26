@@ -48,10 +48,14 @@ mod verification {
 
     /// Provamos que find_char nunca retorna posição >= len.
     #[kani::proof]
-    fn verify_find_char_bounds() {
-        let bytes = kani::any::<[u8; 256]>();
+    #[kani::unwind(257)]
+    pub fn verify_find_char_bounds() {
+        let bytes: [u8; 256] = kani::any();
+
         let s = SafeString { inner: bytes.to_vec() };
-        let c = kani::any::<u8>();
+
+        let c: u8 = kani::any();
+
         let result = s.find_char(c);
 
         match result {
@@ -67,13 +71,16 @@ mod verification {
 
     /// Provamos que find_char_raw nunca lê além do buffer.
     #[kani::proof]
-    fn verify_find_char_raw_safety() {
-        let bytes = kani::any::<[u8; 256]>();
-        let len = kani::any::<usize>();
+    #[kani::unwind(257)]
+    pub fn verify_find_char_raw_safety() {
+        let bytes: [u8; 256] = kani::any();
+
+        let len: usize = kani::any();
         kani::assume(len <= 256);
 
         let ptr = bytes.as_ptr();
-        let c = kani::any::<u8>();
+
+        let c: u8 = kani::any();
 
         unsafe {
             let result = SafeString::find_char_raw(ptr, len, c);
@@ -91,10 +98,71 @@ mod verification {
 
     /// Provamos que o padrão Squidbleed NÃO acontece no SafeString.
     #[kani::proof]
-    fn verify_no_squidbleed_pattern() {
-        let bytes = kani::any::<[u8; 256]>();
+    #[kani::unwind(257)]
+    pub fn verify_no_squidbleed_pattern() {
+        let bytes: [u8; 256] = kani::any();
+
         let s = SafeString { inner: bytes.to_vec() };
-        let c = kani::any::<u8>();
+
+        let c: u8 = kani::any();
+
+        let result = s.find_char(c);
+        match result {
+            Some(pos) => assert!(pos < s.inner.len()),
+            None => assert!(true),
+        }
+    }
+}
+
+#[cfg(all(test, not(kani)))]
+mod verification_tests {
+    use super::*;
+
+    #[test]
+    fn verify_find_char_bounds() {
+        let bytes = [0u8; 256]; // Mock for non-kani testing
+        let s = SafeString { inner: bytes.to_vec() };
+        let c = 0u8; // Mock
+        let result = s.find_char(c);
+
+        match result {
+            Some(pos) => {
+                assert!(pos < s.inner.len());
+                assert_eq!(s.inner[pos], c);
+            }
+            None => {
+                assert!(!s.inner.contains(&c));
+            }
+        }
+    }
+
+    #[test]
+    fn verify_find_char_raw_safety() {
+        let bytes = [0u8; 256];
+        let len = 256usize;
+
+        let ptr = bytes.as_ptr();
+        let c = 0u8;
+
+        unsafe {
+            let result = SafeString::find_char_raw(ptr, len, c);
+            match result {
+                Some(pos) => {
+                    assert!(pos < len);
+                    assert_eq!(bytes[pos], c);
+                }
+                None => {
+                    assert!(!bytes.iter().take(len).any(|&x| x == c));
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn verify_no_squidbleed_pattern() {
+        let bytes = [0u8; 256];
+        let s = SafeString { inner: bytes.to_vec() };
+        let c = 0u8;
 
         let result = s.find_char(c);
         match result {

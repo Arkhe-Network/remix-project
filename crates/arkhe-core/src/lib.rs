@@ -29,3 +29,4 @@ impl Timestamp {
         self.millis
     }
 }
+pub mod prolog_bridge;
